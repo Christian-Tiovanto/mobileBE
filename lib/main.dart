@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_be/views/login_screen.dart';
+import 'package:mobile_be/dashboard/dashboard_screen.dart';
+import 'package:mobile_be/authentication/forgot_password_screen.dart';
+import 'package:mobile_be/authentication/insert_new_password.dart';
+import 'package:mobile_be/authentication/login_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,8 +14,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: LoginPage(),
+        body: Dashboard(),
       ),
     );
   }

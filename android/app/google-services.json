@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "439375036707",
+    "project_id": "medicube-a77dd",
+    "storage_bucket": "medicube-a77dd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:439375036707:android:b67000697f824172de4c96",
+        "android_client_info": {
+          "package_name": "com.example.mobile_be"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAol9AwcFDq81Sg0-NRmS7izeEMfVuxgU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
