@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:mobile_be/attendance/attendancedetail.dart';
+import 'package:mobile_be/pages/attendance/attendancedetail.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});

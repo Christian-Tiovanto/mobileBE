@@ -40,7 +40,7 @@ class _AnnouncementDetailState extends State<AnnouncementDetail> {
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "Random text brbrbr",
+                  "This is the content of the announcement",
                   style: TextStyle(fontSize: 16),
                 ),
               ],

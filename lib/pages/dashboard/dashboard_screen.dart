@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_be/attendance/attendancescreen.dart';
+import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

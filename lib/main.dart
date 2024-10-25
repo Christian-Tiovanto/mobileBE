@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_be/announcement/announcement_detail.dart';
-import 'package:mobile_be/announcement/announcement_screen.dart';
-import 'package:mobile_be/attendance/attendancescreen.dart';
-import 'package:mobile_be/dashboard/dashboard_screen.dart';
-import 'package:mobile_be/authentication/forgot_password_screen.dart';
-import 'package:mobile_be/authentication/insert_new_password.dart';
-import 'package:mobile_be/authentication/login_screen.dart';
-import 'package:mobile_be/grade/grade_screen.dart';
+import 'package:mobile_be/pages/announcement/announcement_detail.dart';
+import 'package:mobile_be/pages/announcement/announcement_screen.dart';
+import 'package:mobile_be/pages/attendance/attendancescreen.dart';
+import 'package:mobile_be/pages/dashboard/dashboard_screen.dart';
+import 'package:mobile_be/pages/authentication/forgot_password_screen.dart';
+import 'package:mobile_be/pages/authentication/insert_new_password.dart';
+import 'package:mobile_be/pages/authentication/login_screen.dart';
+import 'package:mobile_be/pages/grade/grade_screen.dart';
 
 void main() {
   runApp(const MainApp());
