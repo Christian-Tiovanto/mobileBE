@@ -28,13 +28,135 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: const Text('Attendance'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
+      drawer: Drawer(
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        child: ListView(
+          children: [
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.white,
+              padding: EdgeInsets.all(20),
+              child: Image.asset(
+                './../../image/logo.jpeg',
+              ),
+            ),
+            Divider(
+              thickness: 3,
+              color: Color.fromARGB(255, 231, 125, 11),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/dashboard');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Dashboard",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/attendance');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Attendance",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/grade');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Grade",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/announcements');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Announcements",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                print('to be implemented');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Schedule",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                print('to be implemented');
+              },
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "Reports",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
+      appBar: AppBar(
+        leading: Builder(builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20.0), // Apply padding here
+            child: InkWell(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: Icon(
+                Icons.menu,
+                size: 50,
+              ),
+            ),
+          );
+        }),
+        backgroundColor: Color.fromARGB(255, 231, 125, 11),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            'Menu',
+            style: TextStyle(fontSize: 30, color: Colors.white),
+          ),
+        ),
+        toolbarHeight: 100,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -151,7 +273,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: weekdays.map((day) {
@@ -187,15 +310,18 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                 }
 
                 int dayNumber = index - (firstWeekday - 2);
-                DateTime day = DateTime(currentYear, _selectedDate.month, dayNumber);
-                bool isWeekend = day.weekday == DateTime.saturday || day.weekday == DateTime.sunday;
+                DateTime day =
+                    DateTime(currentYear, _selectedDate.month, dayNumber);
+                bool isWeekend = day.weekday == DateTime.saturday ||
+                    day.weekday == DateTime.sunday;
 
                 return InkWell(
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => AttendanceDetail(selectedDate: day),
+                        builder: (context) =>
+                            AttendanceDetail(selectedDate: day),
                       ),
                     );
                   },
