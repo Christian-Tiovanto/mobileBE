@@ -37,12 +37,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               width: 200,
               height: 200,
               color: Colors.white,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Image.asset(
                 './../../image/logo.jpeg',
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 3,
               color: Color.fromARGB(255, 231, 125, 11),
             ),
@@ -50,9 +50,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 Navigator.pushNamed(context, '/dashboard');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Dashboard",
                     style: TextStyle(fontSize: 20),
@@ -64,9 +64,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 Navigator.pushNamed(context, '/attendance');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Attendance",
                     style: TextStyle(fontSize: 20),
@@ -78,9 +78,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 Navigator.pushNamed(context, '/grade');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Grade",
                     style: TextStyle(fontSize: 20),
@@ -92,9 +92,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 Navigator.pushNamed(context, '/announcements');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Announcements",
                     style: TextStyle(fontSize: 20),
@@ -106,9 +106,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 print('to be implemented');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Schedule",
                     style: TextStyle(fontSize: 20),
@@ -120,9 +120,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onTap: () {
                 print('to be implemented');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Reports",
                     style: TextStyle(fontSize: 20),
@@ -136,21 +136,21 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return Padding(
-            padding: const EdgeInsets.only(left: 20.0), // Apply padding here
+            padding: const EdgeInsets.only(left: 20.0),
             child: InkWell(
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.menu,
                 size: 50,
               ),
             ),
           );
         }),
-        backgroundColor: Color.fromARGB(255, 231, 125, 11),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20),
+        backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
           child: Text(
             'Menu',
             style: TextStyle(fontSize: 30, color: Colors.white),
@@ -216,7 +216,6 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     DateTime firstDayOfMonth = DateTime(currentYear, _selectedDate.month, 1);
     int firstWeekday = firstDayOfMonth.weekday;
 
-    // Weekday names
     List<String> weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return Container(

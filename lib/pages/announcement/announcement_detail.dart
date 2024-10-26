@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AnnouncementDetail extends StatefulWidget {
@@ -13,9 +12,9 @@ class _AnnouncementDetailState extends State<AnnouncementDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 231, 125, 11),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20),
+        backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
           child: Text(
             'Announcements',
             style: TextStyle(fontSize: 30, color: Colors.white),
@@ -30,9 +29,9 @@ class _AnnouncementDetailState extends State<AnnouncementDetail> {
               width: double.infinity,
               height: 170,
               color: Colors.amber,
-              child: Center(child: Text("Image")),
+              child: const Center(child: Text("Image")),
             ),
-            Column(
+            const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(

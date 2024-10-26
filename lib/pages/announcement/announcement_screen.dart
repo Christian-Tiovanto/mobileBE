@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AnnouncementScreen extends StatefulWidget {
@@ -21,12 +20,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 width: 200,
                 height: 200,
                 color: Colors.white,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Image.asset(
                   './../../image/logo.jpeg',
                 ),
               ),
-              Divider(
+              const Divider(
                 thickness: 3,
                 color: Color.fromARGB(255, 231, 125, 11),
               ),
@@ -34,9 +33,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, '/dashboard');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Dashboard",
                       style: TextStyle(fontSize: 20),
@@ -48,9 +47,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, '/attendance');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Attendance",
                       style: TextStyle(fontSize: 20),
@@ -62,9 +61,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, '/grade');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Grade",
                       style: TextStyle(fontSize: 20),
@@ -76,9 +75,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   Navigator.pushNamed(context, '/announcements');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Announcements",
                       style: TextStyle(fontSize: 20),
@@ -90,9 +89,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   print('to be implemented');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Schedule",
                       style: TextStyle(fontSize: 20),
@@ -104,9 +103,9 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   print('to be implemented');
                 },
-                child: Card(
+                child: const Card(
                   child: Padding(
-                    padding: const EdgeInsets.all(14.0),
+                    padding: EdgeInsets.all(14.0),
                     child: Text(
                       "Reports",
                       style: TextStyle(fontSize: 20),
@@ -125,16 +124,16 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 onTap: () {
                   Scaffold.of(context).openDrawer();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.menu,
                   size: 50,
                 ),
               ),
             );
           }),
-          backgroundColor: Color.fromARGB(255, 231, 125, 11),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 20),
+          backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+          title: const Padding(
+            padding: EdgeInsets.only(left: 20),
             child: Text(
               'Menu',
               style: TextStyle(fontSize: 30, color: Colors.white),
@@ -145,10 +144,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
         body: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 height: 150,
                 child: Column(
@@ -157,8 +156,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         width: double.infinity,
                         color: Colors.amber,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
                           child: FittedBox(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -175,12 +174,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         color: Colors.lightBlue,
                         width: double.infinity,
-                        child: Center(child: Text("image")),
+                        child: const Center(child: Text("image")),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         color: Colors.amber,
                         width: double.infinity,
                         child: Align(
@@ -188,11 +187,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.blue,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                               ),
                               backgroundColor:
-                                  Color.fromARGB(255, 227, 132, 36),
+                                  const Color.fromARGB(255, 227, 132, 36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -202,7 +201,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                   context, '/announcements/detail');
                               // Add your onPressed code here!
                             },
-                            child: Text(
+                            child: const Text(
                               'View Detail',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -213,10 +212,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 height: 150,
                 child: Column(
@@ -225,8 +224,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         width: double.infinity,
                         color: Colors.amber,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
                           child: FittedBox(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -243,12 +242,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         color: Colors.lightBlue,
                         width: double.infinity,
-                        child: Center(child: Text("image")),
+                        child: const Center(child: Text("image")),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         color: Colors.amber,
                         width: double.infinity,
                         child: Align(
@@ -256,11 +255,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.blue,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                               ),
                               backgroundColor:
-                                  Color.fromARGB(255, 227, 132, 36),
+                                  const Color.fromARGB(255, 227, 132, 36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -270,7 +269,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                   context, '/announcements/detail');
                               // Add your onPressed code here!
                             },
-                            child: Text(
+                            child: const Text(
                               'View Detail',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -281,10 +280,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 height: 150,
                 child: Column(
@@ -293,8 +292,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         width: double.infinity,
                         color: Colors.amber,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
                           child: FittedBox(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -311,12 +310,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         color: Colors.lightBlue,
                         width: double.infinity,
-                        child: Center(child: Text("image")),
+                        child: const Center(child: Text("image")),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         color: Colors.amber,
                         width: double.infinity,
                         child: Align(
@@ -324,11 +323,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.blue,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                               ),
                               backgroundColor:
-                                  Color.fromARGB(255, 227, 132, 36),
+                                  const Color.fromARGB(255, 227, 132, 36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -338,7 +337,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                   context, '/announcements/detail');
                               // Add your onPressed code here!
                             },
-                            child: Text(
+                            child: const Text(
                               'View Detail',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -349,10 +348,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 height: 150,
                 child: Column(
@@ -361,8 +360,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         width: double.infinity,
                         color: Colors.amber,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
                           child: FittedBox(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -379,12 +378,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Container(
                         color: Colors.lightBlue,
                         width: double.infinity,
-                        child: Center(child: Text("image")),
+                        child: const Center(child: Text("image")),
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 5),
                         color: Colors.amber,
                         width: double.infinity,
                         child: Align(
@@ -392,11 +391,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shadowColor: Colors.blue,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                               ),
                               backgroundColor:
-                                  Color.fromARGB(255, 227, 132, 36),
+                                  const Color.fromARGB(255, 227, 132, 36),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
@@ -406,7 +405,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                                   context, '/announcements/detail');
                               // Add your onPressed code here!
                             },
-                            child: Text(
+                            child: const Text(
                               'View Detail',
                               style: TextStyle(color: Colors.white),
                             ),
@@ -417,7 +416,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
             ],

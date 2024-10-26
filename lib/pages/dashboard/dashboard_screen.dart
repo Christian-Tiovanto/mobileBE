@@ -22,12 +22,12 @@ class _DashboardState extends State<Dashboard> {
               width: 200,
               height: 200,
               color: Colors.white,
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Image.asset(
                 './../../image/logo.jpeg',
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 3,
               color: Color.fromARGB(255, 231, 125, 11),
             ),
@@ -35,9 +35,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 Navigator.pushNamed(context, '/dashboard');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Dashboard",
                     style: TextStyle(fontSize: 20),
@@ -49,9 +49,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 Navigator.pushNamed(context, '/attendance');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Attendance",
                     style: TextStyle(fontSize: 20),
@@ -63,9 +63,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 Navigator.pushNamed(context, '/grade');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Grade",
                     style: TextStyle(fontSize: 20),
@@ -77,9 +77,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 Navigator.pushNamed(context, '/announcements');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Announcements",
                     style: TextStyle(fontSize: 20),
@@ -91,9 +91,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 print('to be implemented');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Schedule",
                     style: TextStyle(fontSize: 20),
@@ -105,9 +105,9 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 print('to be implemented');
               },
-              child: Card(
+              child: const Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(14.0),
+                  padding: EdgeInsets.all(14.0),
                   child: Text(
                     "Reports",
                     style: TextStyle(fontSize: 20),
@@ -126,16 +126,16 @@ class _DashboardState extends State<Dashboard> {
               onTap: () {
                 Scaffold.of(context).openDrawer();
               },
-              child: Icon(
+              child: const Icon(
                 Icons.menu,
                 size: 50,
               ),
             ),
           );
         }),
-        backgroundColor: Color.fromARGB(255, 231, 125, 11),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20),
+        backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
           child: Text(
             'Menu',
             style: TextStyle(fontSize: 30, color: Colors.white),
@@ -144,23 +144,23 @@ class _DashboardState extends State<Dashboard> {
         toolbarHeight: 100,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
                 image: AssetImage('./../../image/bg_mobile_be.jpg'))),
         child: Center(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Container(
-                padding: EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.amber),
                 width: 300,
-                child: Row(
+                child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Column(
@@ -181,10 +181,10 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              Container(
+              SizedBox(
                 width: 350,
                 child: Column(
                   children: [
@@ -199,26 +199,26 @@ class _DashboardState extends State<Dashboard> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              AttendanceScreen()));
+                                              const AttendanceScreen()));
                                 },
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.assignment_turned_in_sharp,
                                     color: Colors.white,
                                     size: 80,
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Attendance",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -236,7 +236,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
@@ -246,10 +246,10 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Grade",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -259,7 +259,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -275,7 +275,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
@@ -293,10 +293,10 @@ class _DashboardState extends State<Dashboard> {
                                   // ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Announcements",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -314,7 +314,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
@@ -326,10 +326,10 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Student Profile",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -339,7 +339,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
@@ -354,7 +354,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
@@ -366,10 +366,10 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Schedule",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -387,7 +387,7 @@ class _DashboardState extends State<Dashboard> {
                                 child: Container(
                                   width: 100,
                                   height: 100,
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       color: Colors.amber,
                                       borderRadius: BorderRadius.circular(20)),
@@ -399,10 +399,10 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
-                              Text(
+                              const Text(
                                 "Reports",
                                 style: TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
@@ -412,7 +412,7 @@ class _DashboardState extends State<Dashboard> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                   ],

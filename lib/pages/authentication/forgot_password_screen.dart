@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -16,13 +14,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
-            Container(
+            const SizedBox(
               height: 200,
               width: 300,
-              child: const Image(image: AssetImage('./../../image/logo.jpeg')),
+              child: Image(image: AssetImage('./../../image/logo.jpeg')),
             ),
             const Text(
               "Forgot",
@@ -35,15 +33,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             Container(
               width: 300,
               decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 233, 186, 115),
+                  color: const Color.fromARGB(255, 233, 186, 115),
                   borderRadius: BorderRadius.circular(20)),
-              padding: EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text('TEACHER ID'),
                   ),
@@ -52,14 +50,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20)),
                       hintText: 'Enter Your ID',
-                      fillColor: Color.fromARGB(255, 231, 225, 213),
+                      fillColor: const Color.fromARGB(255, 231, 225, 213),
                       filled: true,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.topLeft,
                     child: Text('PASSWORD'),
                   ),
@@ -69,7 +67,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         child: TextField(
                           obscureText: true,
                           decoration: InputDecoration(
-                            fillColor: Color.fromARGB(255, 231, 225, 213),
+                            fillColor: const Color.fromARGB(255, 231, 225, 213),
                             filled: true,
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20)),
@@ -77,40 +75,37 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shadowColor: Colors.blue,
-                          padding: EdgeInsets.all(10),
-                          backgroundColor: Color.fromARGB(255, 227, 132, 36),
+                          padding: const EdgeInsets.all(10),
+                          backgroundColor: const Color.fromARGB(255, 227, 132, 36),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                         onPressed: () {
                           print('ea');
-                          // Add your onPressed code here!
                         },
-                        child: Container(
-                          child: Text(
-                            'Get OTP',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                        child: const Text(
+                          'Get OTP',
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Container(
-                    constraints: BoxConstraints.tightFor(width: 200),
+                    constraints: const BoxConstraints.tightFor(width: 200),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shadowColor: Colors.blue,
-                        backgroundColor: Color.fromARGB(255, 227, 132, 36),
+                        backgroundColor: const Color.fromARGB(255, 227, 132, 36),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -118,13 +113,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/insert-new-password');
                       },
-                      child: Text(
+                      child: const Text(
                         'Submit',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],
