@@ -4,9 +4,9 @@ import 'package:mobile_be/pages/grade/studentmodel.dart';
 
 class StudentGrade extends StatelessWidget {
   final String lessonName;
-  final String teacherName; // Add teacherName property
+  final String teacherName = 'ini ntar fetch API'; // Add teacherName property
 
-  StudentGrade({Key? key, required this.lessonName, required this.teacherName}) : super(key: key);
+  StudentGrade({Key? key, required this.lessonName}) : super(key: key);
 
   final List<Student> students = [
     Student(
@@ -77,7 +77,8 @@ class StudentGrade extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filteredStudents = students.where((student) => student.subject == lessonName).toList();
+    final filteredStudents =
+        students.where((student) => student.subject == lessonName).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -101,18 +102,21 @@ class StudentGrade extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final student = filteredStudents[index];
                       return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
                         elevation: 4,
                         child: ListTile(
                           contentPadding: const EdgeInsets.all(16),
                           title: Text(
                             student.name,
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('ID: ${student.studentID}', style: const TextStyle(fontSize: 16)),
+                              Text('ID: ${student.studentID}',
+                                  style: const TextStyle(fontSize: 16)),
                             ],
                           ),
                           trailing: const Icon(Icons.arrow_forward_ios),
@@ -120,7 +124,8 @@ class StudentGrade extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => GradeScreen(student: student),
+                                builder: (context) =>
+                                    GradeScreen(student: student),
                               ),
                             );
                           },

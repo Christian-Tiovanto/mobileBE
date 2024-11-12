@@ -25,17 +25,21 @@ class MainApp extends StatelessWidget {
           case '/login':
             return MaterialPageRoute(builder: (context) => const LoginPage());
           case '/forgot-password':
-            return MaterialPageRoute(builder: (context) => const ForgotPassword());
+            return MaterialPageRoute(
+                builder: (context) => const ForgotPassword());
           case '/dashboard':
             return MaterialPageRoute(builder: (context) => const Dashboard());
           case '/insert-new-password':
-            return MaterialPageRoute(builder: (context) => const InsertNewPassword());
+            return MaterialPageRoute(
+                builder: (context) => const InsertNewPassword());
           case '/attendance':
-            return MaterialPageRoute(builder: (context) => const AttendanceScreen());
+            return MaterialPageRoute(
+                builder: (context) => const AttendanceScreen());
           case '/grade':
-            return MaterialPageRoute(builder: (context) => LessonGrade());
+            return MaterialPageRoute(builder: (context) => PickSubjectPage());
           case '/announcements':
-            return MaterialPageRoute(builder: (context) => const AnnouncementScreen());
+            return MaterialPageRoute(
+                builder: (context) => const AnnouncementScreen());
           case '/announcements/detail':
             final args = settings.arguments as Map<String, dynamic>;
             return MaterialPageRoute(

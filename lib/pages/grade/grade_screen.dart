@@ -25,7 +25,7 @@ class _GradeScreenState extends State<GradeScreen> {
               color: Colors.white,
               padding: const EdgeInsets.all(20),
               child: Image.asset(
-                './../../image/logo.jpeg',
+                'image/logo.jpeg',
               ),
             ),
             const Divider(
@@ -102,18 +102,30 @@ class _GradeScreenState extends State<GradeScreen> {
                         const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                            Text('Student ID', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                            Text('Subject', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('Name',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('Student ID',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('Subject',
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
                           ],
                         ),
                         const SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('    : ${widget.student.name}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                            Text('    : ${widget.student.studentID}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                            Text('    : ${widget.student.subject}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('    : ${widget.student.name}',
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('    : ${widget.student.studentID}',
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
+                            Text('    : ${widget.student.subject}',
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500)),
                           ],
                         )
                       ],
@@ -136,8 +148,10 @@ class _GradeScreenState extends State<GradeScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 231, 125, 11),
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 12),
+                      textStyle: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     child: const Text("Back"),
                   ),
@@ -200,7 +214,8 @@ class _GradeScreenState extends State<GradeScreen> {
                 child: Center(
                   child: Text(
                     '$score',
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
