@@ -238,7 +238,8 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/grade');
+                                    Navigator.pushNamed(
+                                        context, '/choose-class-grade');
                                   },
                                   child: Container(
                                     width: 100,
