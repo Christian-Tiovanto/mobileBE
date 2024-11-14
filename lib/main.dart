@@ -8,7 +8,11 @@ import 'package:mobile_be/pages/authentication/login_screen.dart';
 import 'package:mobile_be/pages/dashboard/dashboard_screen.dart';
 import 'package:mobile_be/pages/grade/choose-class_screen.dart';
 import 'package:mobile_be/pages/grade/lessongrade.dart';
+
+import 'package:mobile_be/pages/teachers/teacher_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 Future<bool> isLoggedIn() async {
   final prefs = await SharedPreferences.getInstance();
@@ -74,6 +78,7 @@ class MainApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => const LoginPage());
         }
       },
+
     );
   }
 }
