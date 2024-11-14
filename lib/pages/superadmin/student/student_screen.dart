@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_be/model/teachermodel.dart';
-import 'package:mobile_be/pages/teachers/teacher_profile.dart';
+import 'package:mobile_be/pages/superadmin/student/student_profile.dart';
+import 'package:mobile_be/pages/superadmin/teachers/teacher_profile.dart';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_be/pages/grade/grade_screen.dart';
@@ -8,22 +9,21 @@ import 'package:mobile_be/model/studentmodel.dart';
 import 'package:mobile_be/services/student-service.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 
-class TeacherScreenHttp extends StatefulWidget {
-  TeacherScreenHttp({
+class StudentScreen extends StatefulWidget {
+  StudentScreen({
     super.key,
   });
 
   @override
-  State<TeacherScreenHttp> createState() => _TeacherScreenHttpState();
+  State<StudentScreen> createState() => _StudentScreenState();
 }
 
-class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
+class _StudentScreenState extends State<StudentScreen> {
   final String teacherName = 'ini ntar fetch API'; // Add teacherName property
 
   bool _isEditMode = false;
-  String _selectedTitle = 'Mr.';
 
-  void _showAddTeacherDialog() {
+  void _showAddStudentDialog() {
     TextEditingController nameController = TextEditingController();
     TextEditingController idController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
@@ -34,7 +34,7 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add Teacher'),
+          title: const Text('Add Student'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -72,7 +72,7 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
             ElevatedButton(
               onPressed: () async {
                 try {
-                  final response = await TeacherService().registerTeacher(
+                  final response = await StudentService().registerStudent(
                       nameController.text,
                       emailController.text,
                       passwordController.text,
@@ -80,14 +80,14 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                       phoneNumController.text);
                   if (response == true) {
                     setState(() {});
-                    Navigator.of(context).pop();
+                    return Navigator.of(context).pop();
                   }
                 } catch (error) {
-                  print('error di addteacher');
+                  print('error di addStudent');
                   print(error);
                 }
               },
-              child: const Text('Add Teacher'),
+              child: const Text('Add Student'),
             ),
           ],
         );
@@ -124,8 +124,8 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
   //   );
   // }
 
-  Future<dynamic> getAllTeacher() {
-    final results = TeacherService().getAllTeacher();
+  Future<dynamic> getAllStudent() {
+    final results = StudentService().getAllStudent();
     print('results di grade');
     print(results);
     return results;
@@ -137,14 +137,14 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
     return Scaffold(
       floatingActionButton: _isEditMode
           ? FloatingActionButton(
-              onPressed: _showAddTeacherDialog,
+              onPressed: _showAddStudentDialog,
               child: const Icon(Icons.add),
               backgroundColor: const Color.fromARGB(255, 231, 125, 11),
-              tooltip: 'Add Teacher',
+              tooltip: 'Add Studentr',
             )
           : null,
       appBar: AppBar(
-        title: const Text('Teachers', style: TextStyle(fontSize: 24)),
+        title: const Text('Studens', style: TextStyle(fontSize: 24)),
         backgroundColor: const Color.fromARGB(255, 231, 125, 11),
         actions: [
           IconButton(
@@ -154,7 +154,7 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                 _isEditMode = !_isEditMode;
               });
             },
-            tooltip: _isEditMode ? 'Cancel Edit' : 'Edit Teachers',
+            tooltip: _isEditMode ? 'Cancel Edit' : 'Edit Student',
           ),
         ],
       ),
@@ -163,12 +163,12 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Teacher: $teacherName',
+              '',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           FutureBuilder(
-              future: getAllTeacher(),
+              future: getAllStudent(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
@@ -177,7 +177,7 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                     );
                   } else if (snapshot.hasData) {
                     print('data di studentgrade');
-                    final data = snapshot.data as List<Teacher>;
+                    final data = snapshot.data as List<Student>;
                     print(data);
                     return Expanded(
                       child: data.isEmpty
@@ -214,8 +214,8 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      TeacherProfile(
-                                                          teacher: data[index]),
+                                                      StudentProfile(
+                                                          student: data[index]),
                                                 ),
                                               );
                                             },

@@ -36,15 +36,17 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
           } else {
             final announcements = snapshot.data!;
             if (announcements.isEmpty) {
-              return ElevatedButton(
-                  onPressed: () async {
-                    await _database.insertAnnouncement(Announcement(
-                        title: 'tes',
-                        image: 'image/qualification.png',
-                        description: 'tes',
-                        date: 'tes'));
-                  },
-                  child: Text('No announcements available.'));
+              return Center(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await _database.insertAnnouncement(Announcement(
+                          title: 'tes',
+                          image: 'image/qualification.png',
+                          description: 'tes',
+                          date: 'tes'));
+                    },
+                    child: Text('No announcements available.')),
+              );
             }
 
             // return ElevatedButton(

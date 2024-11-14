@@ -54,4 +54,40 @@ class GradeService {
       throw Exception(e.toString());
     }
   }
+
+  Future createEmptyGradeBulk(
+      String subject, String class_id, String teacherId) async {
+    final url = Uri.parse("http://$baseHost:$basePort/api/v1/grade/bulk");
+    try {
+      print('ini di classroom service createEmptyGradeBulk');
+      print(subject);
+      print(class_id);
+      print(teacherId);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            'subject': subject,
+            "tahun_ajaran": "2023",
+            "class_id": class_id,
+            'teacher_id': teacherId
+          }));
+      print(response.statusCode);
+      print(jsonDecode(response.body));
+      final data = jsonDecode(response.body)['data'];
+      print('data di classroom service');
+      print(data);
+      print("bener kan ini");
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
 }

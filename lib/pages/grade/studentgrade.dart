@@ -25,6 +25,8 @@ class _StudentGradeState extends State<StudentGrade> {
   @override
   Widget build(BuildContext context) {
     final String lessonName = widget.lessonName;
+    print('lessonName di studentgrade');
+    print(lessonName);
     return Scaffold(
       appBar: AppBar(
         title: Text('$lessonName Grades'),
@@ -35,7 +37,7 @@ class _StudentGradeState extends State<StudentGrade> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              'Teacher: $teacherName',
+              '',
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
@@ -51,6 +53,8 @@ class _StudentGradeState extends State<StudentGrade> {
                     print('data di studentgrade');
                     final data = snapshot.data as List<Student>;
                     print(data);
+                    print(lessonName);
+
                     return Expanded(
                       child: data.isEmpty
                           ? Center(
@@ -89,7 +93,7 @@ class _StudentGradeState extends State<StudentGrade> {
                                           builder: (context) => GradeScreen(
                                             student_uid: student.id,
                                             class_id: widget.class_id,
-                                            lessonName: widget.lessonName,
+                                            lessonName: lessonName,
                                           ),
                                         ),
                                       );

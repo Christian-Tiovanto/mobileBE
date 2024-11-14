@@ -247,7 +247,7 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Text("Welcome Back"),
                           Text(
-                            'Jiara Martins',
+                            'Teachers',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 26),
                           ),
@@ -259,18 +259,21 @@ class _DashboardState extends State<Dashboard> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                             backgroundColor: Colors.amber,
-                            content: Column(
-                              children: [
-                                CircleAvatar(
-                                    child: ImageStreamWidget(
-                                        imageUrl:
-                                            '/api/v1/teacher/${_jwtPayload!['id']}/photo')),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      _pickImageFromGallery();
-                                    },
-                                    child: Text('choose image'))
-                              ],
+                            content: Container(
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                      child: ImageStreamWidget(
+                                          imageUrl:
+                                              '/api/v1/teacher/${_jwtPayload!['id']}/photo')),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        _pickImageFromGallery();
+                                      },
+                                      child: Text('choose image'))
+                                ],
+                              ),
                             ),
                             actions: <Widget>[
                               TextButton(
@@ -288,7 +291,8 @@ class _DashboardState extends State<Dashboard> {
                                           _jwtPayload!['id'], _selectedImage!);
                                   print("response di update image berhasi");
                                   print(response);
-                                  return Navigator.pop(context, 'OK');
+                                  Navigator.pop(context, 'OK');
+                                  setState(() {});
                                 },
                                 child: const Text('Update'),
                               ),

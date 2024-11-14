@@ -87,11 +87,6 @@ class TeacherService {
 
   Future getAllTeacher() async {
     final prefs = await SharedPreferences.getInstance();
-    // final token = prefs.getString('token');
-    // final tokenExist = prefs.containsKey('token');
-    // if (!tokenExist) throw Exception('log in first');
-    // print('decodeJwtPayload(token!)');
-    // final teacher_id = decodeJwtPayload(token!)['id'];
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/teacher/all/teacher");
     try {

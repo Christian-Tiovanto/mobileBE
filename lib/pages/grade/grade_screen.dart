@@ -21,8 +21,9 @@ class GradeScreen extends StatefulWidget {
 class _GradeScreenState extends State<GradeScreen> {
   Future<dynamic> getStudentGrade(
       String userId, String subject, String classroom) {
+    print('results di grade widget');
+    print(subject);
     final results = GradeService().getStudentGrade(userId, subject, classroom);
-    print('results di grade');
     print(results);
     return results;
   }
@@ -201,6 +202,7 @@ class _GradeScreenState extends State<GradeScreen> {
                   );
                 }
               }
+
               return Center(child: CircularProgressIndicator());
             }),
         // child: Align(

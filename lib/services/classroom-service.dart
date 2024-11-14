@@ -36,4 +36,31 @@ class ClassroomService {
       throw Exception(e.toString());
     }
   }
+
+  Future createClassroom(String classroomName) async {
+    final url = Uri.parse("http://$baseHost:$basePort/api/v1/classroom");
+    try {
+      print('ini di classroom service createClassroom');
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{'_id': classroomName}));
+      print(response.statusCode);
+      print(jsonDecode(response.body));
+      final data = jsonDecode(response.body)['data'];
+      print('data di classroom service');
+      print(data);
+      print("bener kan ini");
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
 }

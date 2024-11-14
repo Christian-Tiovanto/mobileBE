@@ -53,6 +53,8 @@ class PickSubjectStatePage extends State<PickSubjectPage> {
                   );
                 } else if (snapshot.hasData) {
                   final data = snapshot.data as List<dynamic>;
+                  print('data di picksubject');
+                  print(data);
                   return ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
