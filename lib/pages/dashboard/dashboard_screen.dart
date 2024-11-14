@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
+import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +20,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   String? _jwtToken;
+  late SharedPreferences _prefs;
   Map<String, dynamic>? _jwtPayload;
   Future _pickImageFromGallery() async {
     final returnedImage =
@@ -30,15 +32,33 @@ class _DashboardState extends State<Dashboard> {
 
   Future<void> _loadJwtToken() async {
     // Retrieve the stored token
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    final _prefs = await SharedPreferences.getInstance();
+    String? token = _prefs.getString('token');
     print('token di loadjwttoken');
     print(token);
+    if (token == null) {
+      Navigator.pushNamed(context, '/login');
+      return;
+    }
+    print('masih masok sini');
     if (token != null) {
       setState(() {
         _jwtToken = token;
         _jwtPayload = decodeJwtPayload(token);
       });
+    }
+  }
+
+  Future _removeData() async {
+    print("kepanggil gak sih");
+    _prefs = await SharedPreferences.getInstance();
+    bool removed = await _prefs.remove('token');
+    if (removed) {
+      print(_prefs.getString('token'));
+      setState(() {});
+      print('Data removed successfully!');
+    } else {
+      print('Error removing data.');
     }
   }
 
@@ -48,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
     _loadJwtToken();
   }
 
-  File? _selectedImage;
+  File? _selectedImage = null;
   @override
   Widget build(BuildContext context) {
     print('this._jwtPayload');
@@ -157,6 +177,22 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             ),
+            InkWell(
+              onTap: () async {
+                await _removeData();
+                setState(() {});
+                Navigator.pushNamed(context, '/login');
+              },
+              child: const Card(
+                child: Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -243,8 +279,18 @@ class _DashboardState extends State<Dashboard> {
                                 child: const Text('Cancel'),
                               ),
                               TextButton(
-                                onPressed: () => Navigator.pop(context, 'OK'),
-                                child: const Text('OK'),
+                                onPressed: () async {
+                                  if (_selectedImage == null) {
+                                    return Navigator.pop(context, 'OK');
+                                  }
+                                  final response = await TeacherService()
+                                      .updateTeacherPhoto(
+                                          _jwtPayload!['id'], _selectedImage!);
+                                  print("response di update image berhasi");
+                                  print(response);
+                                  return Navigator.pop(context, 'OK');
+                                },
+                                child: const Text('Update'),
                               ),
                             ],
                           ),

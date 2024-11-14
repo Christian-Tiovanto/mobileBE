@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_be/model/classroom-model.dart';
 import 'package:mobile_be/model/teachermodel.dart';
 import 'package:mobile_be/pages/grade/lessongrade.dart';
+import 'package:mobile_be/services/classroom-service.dart';
 import 'package:mobile_be/services/grade-service.dart';
+import 'package:mobile_be/services/teacher-service.dart';
 
 class TeacherProfile extends StatefulWidget {
   final Teacher teacher;
@@ -18,33 +20,39 @@ class _TeacherProfileState extends State<TeacherProfile> {
   String? selectedSubject;
   String? selectedClassCode;
 
-  final Map<String, List<String>> availableClasses = {
-    'Mathematics': ['101', '102', '201', '202'],
-    'Science': ['101', '102', '201', '202'],
-    'Religion': ['101', '102', '201', '202'],
-    'Art': ['101', '102', '201', '202'],
-  };
+  late List<Classroom> availableClasses = [];
+  void getAllClassroom() async {
+    final response = await ClassroomService().getAllClassroom();
+    print("di getAllClassroom");
+    setState(() {
+      availableClasses = response;
+    });
+    print(response);
+  }
 
   @override
   void initState() {
+    print("availableClasses['science']");
     super.initState();
     if (widget.teacher.classroom != null) {
-      classes = List<Classroom>.from(widget.teacher.classroom);
+      classes = List<Classroom>.from(widget.teacher.classroom!);
     }
+    getAllClassroom();
   }
 
-  void _showEditDialog() {
+  void _showEditDialog(Teacher teacher) {
     showDialog(
       context: context,
       builder: (context) {
         return EditClassesDialog(
-          availableClasses: availableClasses,
+          teacher: teacher,
+          // availableClasses: availableClasses,
           initialClasses: classes,
-          onClassesUpdated: (dynamic updatedClasses) {
-            setState(() {
-              classes = updatedClasses;
-            });
-          },
+          // onClassesUpdated: (updatedClasses) {
+          //   setState(() {
+          //     classes = updatedClasses.map((id) => Classroom(id: id)).toList();
+          //   });
+          // },
         );
       },
     );
@@ -52,8 +60,6 @@ class _TeacherProfileState extends State<TeacherProfile> {
 
   @override
   Widget build(BuildContext context) {
-    print('widget.teacher di teacher profile');
-    print(widget.teacher.classroom.map((classr) => classr.id));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.teacher.name, style: const TextStyle(fontSize: 24)),
@@ -63,7 +69,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
             icon: const Icon(Icons.edit),
             onPressed: () {
               print('Edit button pressed');
-              _showEditDialog();
+              _showEditDialog(widget.teacher);
             },
             tooltip: 'Edit Classes',
           ),
@@ -108,16 +114,21 @@ class _TeacherProfileState extends State<TeacherProfile> {
               ),
               const SizedBox(height: 8),
               Column(
-                children: classes.map<Widget>((classCode) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Text(
-                      '${widget.teacher.classroom.map((classr) => classr.id)}',
-                      style: const TextStyle(fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                }).toList(),
+                children: classes.isNotEmpty
+                    ? classes.map<Widget>((classr) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Text(
+                            classr.id,
+                            style: const TextStyle(fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }).toList()
+                    : [
+                        Text("No classes available",
+                            style: const TextStyle(fontSize: 18))
+                      ],
               ),
             ],
           ),
@@ -128,16 +139,12 @@ class _TeacherProfileState extends State<TeacherProfile> {
 }
 
 class EditClassesDialog extends StatefulWidget {
-  final Map<String, List<String>> availableClasses;
   final List<Classroom> initialClasses;
-  final ValueChanged<List<String>> onClassesUpdated;
+  final Teacher teacher;
 
-  const EditClassesDialog({
-    Key? key,
-    required this.availableClasses,
-    required this.initialClasses,
-    required this.onClassesUpdated,
-  }) : super(key: key);
+  const EditClassesDialog(
+      {Key? key, required this.initialClasses, required this.teacher})
+      : super(key: key);
 
   @override
   _EditClassesDialogState createState() => _EditClassesDialogState();
@@ -145,12 +152,25 @@ class EditClassesDialog extends StatefulWidget {
 
 class _EditClassesDialogState extends State<EditClassesDialog> {
   late List<Classroom> classes;
+  List<Classroom> availableClasses = []; // Initialize as an empty list
+
   String? selectedSubject;
   String? selectedClassCode;
 
-  Future<dynamic> getAllSubject() {
-    final results = GradeService().getAllSubject();
-    print('results di grade');
+  // Fetch classrooms data
+  void getAllClassroom() async {
+    final response = await ClassroomService().getAllClassroom();
+    print("Fetched classrooms");
+    setState(() {
+      availableClasses = response; // Assign fetched data to availableClasses
+    });
+    print(response);
+  }
+
+  // Fetch subjects, called after getAllClassroom
+  Future<List<Subject>> getAllSubject() async {
+    final results = await GradeService().getAllSubject();
+    print('Results from getAllSubject');
     print(results);
     return results;
   }
@@ -158,53 +178,54 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
   @override
   void initState() {
     super.initState();
+    print('ini di initsatate');
+    getAllClassroom(); // Initial classroom fetch
     classes = List<Classroom>.from(widget.initialClasses);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('availableClasses di buildcontext');
+    print(availableClasses);
     return AlertDialog(
       title: const Text('Edit Classes'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FutureBuilder(
-              future: getAllSubject(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(
-                      child: Text('${snapshot.error} has occured'),
-                    );
-                  } else if (snapshot.hasData) {
-                    final data = snapshot.data as List<Subject>;
-                    print('data di teacherprofile subject');
-                    print(data);
-                    return DropdownButton<String>(
-                      value: selectedSubject,
-                      hint: const Text('Select a subject'),
-                      onChanged: (String? newSubject) {
-                        print('newSubject');
-                        print(newSubject);
-                        setState(() {
-                          selectedSubject = newSubject;
-                          // selectedClassCode =
-                          //     null; // Reset class code on subject change
-                        });
-                      },
-                      items: data.map<DropdownMenuItem<String>>((subject) {
-                        return DropdownMenuItem<String>(
-                          value: subject.name,
-                          child: Text(subject.name),
-                        );
-                      }).toList(),
-                    );
-                  }
+          FutureBuilder<List<Subject>>(
+            future: getAllSubject(), // Fetch both classrooms and subjects
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text('${snapshot.error} occurred'),
+                  );
+                } else if (snapshot.hasData) {
+                  final data = snapshot.data!;
+                  return DropdownButton<String>(
+                    value: selectedSubject,
+                    hint: const Text('Select a subject'),
+                    onChanged: (String? newSubject) {
+                      setState(() {
+                        selectedSubject = newSubject;
+                        selectedClassCode =
+                            null; // Reset class code on subject change
+                      });
+                    },
+                    items: data.map<DropdownMenuItem<String>>((subject) {
+                      return DropdownMenuItem<String>(
+                        value: subject.name,
+                        child: Text(subject.name),
+                      );
+                    }).toList(),
+                  );
                 }
-                return Center(child: CircularProgressIndicator());
-              }),
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
           const SizedBox(height: 16),
-          if (selectedSubject != null)
+          if (selectedSubject != null && availableClasses.isNotEmpty)
             DropdownButton<String>(
               value: selectedClassCode,
               hint: const Text('Select class'),
@@ -213,60 +234,35 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                   selectedClassCode = newClassCode;
                 });
               },
-              items: widget.availableClasses[selectedSubject]!
-                  .map<DropdownMenuItem<String>>((classCode) {
+              items:
+                  availableClasses.map<DropdownMenuItem<String>>((classCode) {
                 return DropdownMenuItem<String>(
-                  value: classCode,
-                  child: Text(classCode),
+                  value: classCode.id,
+                  child: Text(classCode.id), // Display classCode.id
                 );
               }).toList(),
             ),
-          // DropdownButton<String>(
-          //   value: selectedSubject,
-          //   hint: const Text('Select a subject'),
-          //   onChanged: (String? newSubject) {
-          //     setState(() {
-          //       selectedSubject = newSubject;
-          //       selectedClassCode = null; // Reset class code on subject change
-          //     });
-          //   },
-          //   items: widget.availableClasses.keys
-          //       .map<DropdownMenuItem<String>>((subject) {
-          //     return DropdownMenuItem<String>(
-          //       value: subject,
-          //       child: Text(subject),
-          //     );
-          //   }).toList(),
-          // ),
-
-          // const SizedBox(height: 16),
-          // if (selectedSubject != null)
-          //   DropdownButton<String>(
-          //     value: selectedClassCode,
-          //     hint: const Text('Select class'),
-          //     onChanged: (String? newClassCode) {
-          //       setState(() {
-          //         selectedClassCode = newClassCode;
-          //       });
-          //     },
-          //     items: widget.availableClasses[selectedSubject]!
-          //         .map<DropdownMenuItem<String>>((classCode) {
-          //       return DropdownMenuItem<String>(
-          //         value: classCode,
-          //         child: Text(classCode),
-          //       );
-          //     }).toList(),
-          //   ),
           const SizedBox(height: 16),
-          ...classes.map((className) {
+          ...classes.map((classr) {
             return ListTile(
-              title: Text(className.id),
+              title: Text(classr.id),
               trailing: IconButton(
                 icon: const Icon(Icons.delete, color: Colors.red),
-                onPressed: () {
-                  setState(() {
-                    classes.remove(className);
-                  });
+                onPressed: () async {
+                  try {
+                    classes.remove(classr);
+                    final response = await TeacherService()
+                        .updateTeacheTeachNClass(widget.teacher.id, classes,
+                            widget.teacher.subject_teach);
+                    if (response == true) {
+                      setState(() {
+                        classes.remove(classr);
+                      });
+                    }
+                  } catch (err) {
+                    print('err di delete class');
+                    print(err);
+                  }
                 },
               ),
             );
@@ -279,26 +275,26 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
           child: const Text('Cancel'),
         ),
         ElevatedButton(
-          onPressed: () {
-            if (selectedClassCode != null &&
-                !classes.contains('$selectedSubject $selectedClassCode')) {
-              setState(() {
-                // classes.add('$selectedSubject $selectedClassCode');
-                // selectedClassCode = null; // Reset the selected class code
-              });
-              // widget.onClassesUpdated(classes); // Notify parent widget
-              Navigator.of(context).pop();
-            } else if (selectedClassCode == null) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Please select a class code')),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Class code already exists')),
-              );
+          onPressed: () async {
+            try {
+              print("ini di button editclass");
+              print(selectedSubject);
+              print(selectedClassCode);
+              final response = await TeacherService()
+                  .updateTeacheTeachNClass(widget.teacher.id, [
+                ...widget.teacher.classroom.map((val) => val.id),
+                selectedClassCode != null ? selectedClassCode : ''
+              ], [
+                ...widget.teacher.subject_teach,
+                selectedSubject != null ? selectedSubject : ''
+              ]);
+              if (response == true) Navigator.of(context).pop();
+            } catch (error) {
+              print('error di teaccher profile');
+              print(error);
             }
           },
-          child: const Text('Add Class'),
+          child: const Text('Edit Class And Subject'),
         ),
       ],
     );

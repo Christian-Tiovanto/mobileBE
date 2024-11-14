@@ -26,45 +26,41 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
   void _showAddTeacherDialog() {
     TextEditingController nameController = TextEditingController();
     TextEditingController idController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController phoneNumController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           title: const Text('Add Teacher'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButton<String>(
-                value: _selectedTitle,
-                isExpanded: true,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedTitle = newValue!;
-                  });
-                },
-                items: ['Mr.', 'Mrs.', 'Ms.']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(value),
-                    ),
-                  );
-                }).toList(),
-                icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
-                underline: Container(),
-              ),
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Name'),
-              ),
-              TextField(
-                controller: idController,
-                decoration: const InputDecoration(labelText: 'ID'),
-              ),
-            ],
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(labelText: 'Name'),
+                ),
+                TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                ),
+                TextField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                ),
+                TextField(
+                  controller: idController,
+                  decoration: const InputDecoration(labelText: 'ID'),
+                ),
+                TextField(
+                  controller: phoneNumController,
+                  decoration: const InputDecoration(labelText: 'Phone Number'),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -74,17 +70,22 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  // teachers.add({
-                  //   'title': _selectedTitle,
-                  //   'name': nameController.text,
-                  //   'id': idController.text,
-                  //   'profilePic': 'icon',
-                  //   'classes': [],
-                  // });
-                });
-                Navigator.of(context).pop();
+              onPressed: () async {
+                try {
+                  final response = await TeacherService().registerTeacher(
+                      nameController.text,
+                      emailController.text,
+                      passwordController.text,
+                      idController.text,
+                      phoneNumController.text);
+                  if (response == true) {
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  }
+                } catch (error) {
+                  print('error di addteacher');
+                  print(error);
+                }
               },
               child: const Text('Add Teacher'),
             ),

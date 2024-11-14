@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_be/main.dart';
 import 'package:mobile_be/model/classroom-model.dart';
 import 'package:mobile_be/model/teachermodel.dart';
+import 'package:mobile_be/pages/grade/lessongrade.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/awesome-dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,6 +114,97 @@ class TeacherService {
       }
     } catch (e) {
       print('errorrrr di getallteacher');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  Future updateTeacheTeachNClass(
+      String teacherUid, List<dynamic> classroom, List<dynamic> subject) async {
+    final prefs = await SharedPreferences.getInstance();
+    final url =
+        Uri.parse("http://$baseHost:$basePort/api/v1/teacher/$teacherUid");
+    try {
+      print('ini di teacher service');
+      print(url);
+      print(classroom);
+      print(subject);
+      final response = await http.patch(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            "subject_teach": subject,
+            "class_id": classroom
+          }));
+      print('response di teacher update');
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  Future registerTeacher(String name, String email, String password,
+      String teacherId, String phoneNumber) async {
+    final url = Uri.parse("http://$baseHost:$basePort/api/v1/teacher/signup");
+    try {
+      print('ini di teacher service register');
+      print(url);
+      print(phoneNumber);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, dynamic>{
+            "name": name,
+            "email": email,
+            "password": password,
+            "user_id": teacherId,
+            "phone_number": "$phoneNumber",
+            "enrollment_date": '2024-01-01'
+          }));
+      print('response di teacher register');
+      print(response.body);
+      print(response.statusCode);
+      if (response.statusCode == 201) {
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr di register teacher');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  Future updateTeacherPhoto(String teacherId, File image) async {
+    final url =
+        Uri.parse("http://$baseHost:$basePort/api/v1/teacher/$teacherId/photo");
+    try {
+      print('ini di teacher service register');
+      print(url);
+      print(image.path);
+      final request = await http.MultipartRequest('PATCH', url);
+      final pic = await http.MultipartFile.fromPath('photo', image.path);
+      print('response di teacher register');
+      request.files.add(pic);
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('error update image');
+      }
+    } catch (e) {
+      print('errorrrr di update teacher photo');
       print(e);
       throw Exception(e.toString());
     }
