@@ -38,7 +38,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
               color: Colors.white,
               padding: const EdgeInsets.all(20),
               child: Image.asset(
-                './../../image/logo.jpeg',
+                'image/logo.jpeg',
               ),
             ),
             const Divider(
@@ -161,7 +161,8 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   }
 
   Widget _buildDateHeader() {
-    String formattedDate = DateFormat('EEEE, d MMMM yyyy').format(widget.selectedDate);
+    String formattedDate =
+        DateFormat('EEEE, d MMMM yyyy').format(widget.selectedDate);
 
     return Text(
       formattedDate,
@@ -200,7 +201,8 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
             enabled: false,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               hintText: '$count',
             ),
           ),
@@ -248,7 +250,8 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
         ],
       ),
       child: Column(
-        children: _students.map((student) => _buildStudentRow(student)).toList(),
+        children:
+            _students.map((student) => _buildStudentRow(student)).toList(),
       ),
     );
   }
@@ -296,46 +299,46 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   }
 
   Widget _buildSaveButton() {
-  return Center(
-    child: ElevatedButton(
-      onPressed: () {
-        if (_attendanceStatus.length < _students.length) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Incomplete Data'),
-                content: const Text('Attendance data is incomplete, please check again.'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          Navigator.pushReplacementNamed(context, '/attendance');
-        }
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.amber,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+    return Center(
+      child: ElevatedButton(
+        onPressed: () {
+          if (_attendanceStatus.length < _students.length) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text('Incomplete Data'),
+                  content: const Text(
+                      'Attendance data is incomplete, please check again.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            Navigator.pushReplacementNamed(context, '/attendance');
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.amber,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0),
+          child: Text(
+            'SAVE',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
       ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.0),
-        child: Text(
-          'SAVE',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ),
-    ),
-  );
-}
-
+    );
+  }
 }

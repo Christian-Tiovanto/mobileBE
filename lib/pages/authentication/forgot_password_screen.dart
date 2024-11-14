@@ -20,7 +20,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             const SizedBox(
               height: 200,
               width: 300,
-              child: Image(image: AssetImage('./../../image/logo.jpeg')),
+              child: Image(image: AssetImage('image/logo.jpeg')),
             ),
             const Text(
               "Forgot",
@@ -82,7 +82,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         style: ElevatedButton.styleFrom(
                           shadowColor: Colors.blue,
                           padding: const EdgeInsets.all(10),
-                          backgroundColor: const Color.fromARGB(255, 227, 132, 36),
+                          backgroundColor:
+                              const Color.fromARGB(255, 227, 132, 36),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -105,7 +106,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shadowColor: Colors.blue,
-                        backgroundColor: const Color.fromARGB(255, 227, 132, 36),
+                        backgroundColor:
+                            const Color.fromARGB(255, 227, 132, 36),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),

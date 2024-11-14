@@ -1,84 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_be/pages/grade/grade_screen.dart';
-import 'package:mobile_be/pages/grade/studentmodel.dart';
+import 'package:mobile_be/model/studentmodel.dart';
+import 'package:mobile_be/services/student-service.dart';
 
-class StudentGrade extends StatelessWidget {
-  final String lessonName;
-  final String teacherName; // Add teacherName property
+class StudentGrade extends StatefulWidget {
+  String lessonName;
+  String class_id;
+  StudentGrade({super.key, required this.lessonName, required this.class_id});
 
-  StudentGrade({Key? key, required this.lessonName, required this.teacherName}) : super(key: key);
+  @override
+  State<StudentGrade> createState() => _StudentGradeState();
+}
 
-  final List<Student> students = [
-    Student(
-      name: 'Angela Yang',
-      studentID: 'ST00001',
-      subject: 'Science',
-      assignmentScore: 80,
-      midTermScore: 85,
-      semesterScore: 90,
-    ),
-    Student(
-      name: 'Angela Yang',
-      studentID: 'ST00001',
-      subject: 'Mathematics',
-      assignmentScore: 80,
-      midTermScore: 85,
-      semesterScore: 90,
-    ),
-    Student(
-      name: 'Cherrilyn',
-      studentID: 'ST00003',
-      subject: 'Science',
-      assignmentScore: 80,
-      midTermScore: 85,
-      semesterScore: 90,
-    ),
-    Student(
-      name: 'Benaro',
-      studentID: 'ST00002',
-      subject: 'Mathematics',
-      assignmentScore: 75,
-      midTermScore: 80,
-      semesterScore: 88,
-    ),
-    Student(
-      name: 'Benaro',
-      studentID: 'ST00002',
-      subject: 'Art',
-      assignmentScore: 75,
-      midTermScore: 80,
-      semesterScore: 88,
-    ),
-    Student(
-      name: 'Cherrilyn',
-      studentID: 'ST00003',
-      subject: 'Religion',
-      assignmentScore: 78,
-      midTermScore: 82,
-      semesterScore: 85,
-    ),
-    Student(
-      name: 'Davin Alvaro',
-      studentID: 'ST00004',
-      subject: 'Art',
-      assignmentScore: 92,
-      midTermScore: 89,
-      semesterScore: 95,
-    ),
-    Student(
-      name: 'Davin Alvaro',
-      studentID: 'ST00004',
-      subject: 'Religion',
-      assignmentScore: 92,
-      midTermScore: 89,
-      semesterScore: 95,
-    ),
-  ];
+class _StudentGradeState extends State<StudentGrade> {
+  final String teacherName = 'ini ntar fetch API'; // Add teacherName property
+
+  Future<dynamic> getAllStudentByClassId() {
+    final results = StudentService().getStudentByClassId('6A');
+    print('results di grade');
+    print(results);
+    return results;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final filteredStudents = students.where((student) => student.subject == lessonName).toList();
-
+    final String lessonName = widget.lessonName;
     return Scaffold(
       appBar: AppBar(
         title: Text('$lessonName Grades'),
@@ -93,42 +39,70 @@ class StudentGrade extends StatelessWidget {
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          Expanded(
-            child: filteredStudents.isEmpty
-                ? Center(child: Text('No students found for $lessonName.'))
-                : ListView.builder(
-                    itemCount: filteredStudents.length,
-                    itemBuilder: (context, index) {
-                      final student = filteredStudents[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        elevation: 4,
-                        child: ListTile(
-                          contentPadding: const EdgeInsets.all(16),
-                          title: Text(
-                            student.name,
-                            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('ID: ${student.studentID}', style: const TextStyle(fontSize: 16)),
-                            ],
-                          ),
-                          trailing: const Icon(Icons.arrow_forward_ios),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => GradeScreen(student: student),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ),
+          FutureBuilder(
+              future: getAllStudentByClassId(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('${snapshot.error} has occured'),
+                    );
+                  } else if (snapshot.hasData) {
+                    print('data di studentgrade');
+                    final data = snapshot.data as List<Student>;
+                    print(data);
+                    return Expanded(
+                      child: data.isEmpty
+                          ? Center(
+                              child: Text('No students found for $lessonName.'))
+                          : ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                final student = data[index];
+                                return Card(
+                                  margin: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 16),
+                                  elevation: 4,
+                                  child: ListTile(
+                                    contentPadding: const EdgeInsets.all(16),
+                                    title: Text(
+                                      student.name,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text('ID: ${student.user_id}',
+                                            style:
+                                                const TextStyle(fontSize: 16)),
+                                      ],
+                                    ),
+                                    trailing:
+                                        const Icon(Icons.arrow_forward_ios),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => GradeScreen(
+                                            student_uid: student.id,
+                                            class_id: widget.class_id,
+                                            lessonName: widget.lessonName,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                    );
+                  }
+                }
+                return Center(child: CircularProgressIndicator());
+              }),
         ],
       ),
     );
