@@ -12,11 +12,12 @@ class AnnouncementScreen extends StatefulWidget {
 
 class _AnnouncementScreenState extends State<AnnouncementScreen> {
   late Future<List<Announcement>> _announcementList;
-
+  late DatabaseHelper _database;
   @override
   void initState() {
     super.initState();
-    _announcementList = DatabaseHelper().getAnnouncements();
+    _database = DatabaseHelper();
+    _announcementList = _database.getAnnouncements();
   }
 
   @override
@@ -35,8 +36,22 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
           } else {
             final announcements = snapshot.data!;
             if (announcements.isEmpty) {
-              return const Center(child: Text('No announcements available.'));
+              return ElevatedButton(
+                  onPressed: () async {
+                    await _database.insertAnnouncement(Announcement(
+                        title: 'tes',
+                        image: 'image/qualification.png',
+                        description: 'tes',
+                        date: 'tes'));
+                  },
+                  child: Text('No announcements available.'));
             }
+
+            // return ElevatedButton(
+            //     onPressed: () async {
+            //       await _database.deleteAllAnnouncements();
+            //     },
+            //     child: Text("delete all"));
 
             return ListView.builder(
               itemCount: announcements.length,
@@ -44,7 +59,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 return ListTile(
                   title: Text(announcements[index].title),
                   subtitle: Text(announcements[index].description),
-                  leading: Image.network(
+                  leading: Image.asset(
                     announcements[index].image,
                     width: 50,
                     height: 50,

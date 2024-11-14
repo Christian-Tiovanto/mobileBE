@@ -20,7 +20,7 @@ class _InsertNewPasswordState extends State<InsertNewPassword> {
             const SizedBox(
               height: 200,
               width: 300,
-              child: Image(image: AssetImage('./../../image/logo.jpeg')),
+              child: Image(image: AssetImage('image/logo.jpeg')),
             ),
             const SizedBox(
               height: 50,
@@ -61,7 +61,8 @@ class _InsertNewPasswordState extends State<InsertNewPassword> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         shadowColor: Colors.blue,
-                        backgroundColor: const Color.fromARGB(255, 227, 132, 36),
+                        backgroundColor:
+                            const Color.fromARGB(255, 227, 132, 36),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),

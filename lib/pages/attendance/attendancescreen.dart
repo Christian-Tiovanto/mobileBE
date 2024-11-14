@@ -39,7 +39,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               color: Colors.white,
               padding: const EdgeInsets.all(20),
               child: Image.asset(
-                './../../image/logo.jpeg',
+                'image/logo.jpeg',
               ),
             ),
             const Divider(

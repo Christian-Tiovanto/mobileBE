@@ -13,6 +13,7 @@ class DatabaseHelper {
   DatabaseHelper._internal();
 
   Future<Database> get database async {
+    print('eaaaa');
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
@@ -47,7 +48,7 @@ class DatabaseHelper {
   Future<List<Announcement>> getAnnouncements() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('announcements');
-
+    print(maps);
     return List.generate(maps.length, (i) {
       return Announcement.fromMap(maps[i]);
     });
@@ -77,6 +78,17 @@ class DatabaseHelper {
       );
     } catch (e) {
       print('Error deleting announcement: $e');
+    }
+  }
+
+  Future<void> deleteAllAnnouncements() async {
+    final db = await database;
+
+    try {
+      await db.delete('announcements'); // Deletes all rows in the table
+      print('All announcements deleted');
+    } catch (e) {
+      print('Error deleting announcements: $e');
     }
   }
 }
