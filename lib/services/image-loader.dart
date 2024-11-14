@@ -2,14 +2,15 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_be/main.dart';
 
 class ImageLoader {
-  final baseUrl = '127.0.0.1:3006';
   // Method to fetch image data as a stream
   Stream<Uint8List> loadImage(String endpoint) async* {
     try {
-      String url =
-          "http://172.17.0.140:3006/api/v1/teacher/67321c6e8881997bf9939764/photo";
+      String url = "http://$baseHost:$basePort$endpoint";
+      print('url di imageloader');
+      print(url);
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         yield response.bodyBytes; // Emit image data as a stream

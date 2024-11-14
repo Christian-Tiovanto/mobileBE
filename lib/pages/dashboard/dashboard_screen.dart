@@ -1,7 +1,14 @@
-import 'package:flutter/cupertino.dart';
+// import 'dart:io';
+
+// import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
+import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -11,8 +18,42 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  String? _jwtToken;
+  Map<String, dynamic>? _jwtPayload;
+  Future _pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    setState(() {
+      _selectedImage = File(returnedImage!.path);
+    });
+  }
+
+  Future<void> _loadJwtToken() async {
+    // Retrieve the stored token
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    print('token di loadjwttoken');
+    print(token);
+    if (token != null) {
+      setState(() {
+        _jwtToken = token;
+        _jwtPayload = decodeJwtPayload(token);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadJwtToken();
+  }
+
+  File? _selectedImage;
   @override
   Widget build(BuildContext context) {
+    print('this._jwtPayload');
+    print(this._jwtPayload);
+    print('/api/v1/teacher/${this._jwtPayload!['id']}/photo');
     return Scaffold(
       drawer: Drawer(
         surfaceTintColor: Colors.white,
@@ -177,12 +218,44 @@ class _DashboardState extends State<Dashboard> {
                         ],
                       ),
                       Expanded(
-                          child: Align(
-                              alignment: Alignment.topRight,
-                              child: CircleAvatar(
-                                  child: ImageStreamWidget(
-                                      imageUrl:
-                                          '/api/v1/teacher/6730d11712f72969415a65ae/photo'))))
+                          child: InkWell(
+                        onTap: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            backgroundColor: Colors.amber,
+                            content: Column(
+                              children: [
+                                CircleAvatar(
+                                    child: ImageStreamWidget(
+                                        imageUrl:
+                                            '/api/v1/teacher/${_jwtPayload!['id']}/photo')),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      _pickImageFromGallery();
+                                    },
+                                    child: Text('choose image'))
+                              ],
+                            ),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(context, 'OK'),
+                                child: const Text('OK'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: CircleAvatar(
+                                child: ImageStreamWidget(
+                                    imageUrl:
+                                        '/api/v1/teacher/${this._jwtPayload!['id']}/photo'))),
+                      ))
                     ],
                   ),
                 ),

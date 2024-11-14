@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/model/classroom-model.dart';
+import 'package:mobile_be/model/teachermodel.dart';
+import 'package:mobile_be/pages/grade/lessongrade.dart';
+import 'package:mobile_be/services/grade-service.dart';
 
 class TeacherProfile extends StatefulWidget {
-  final Map<String, dynamic> teacher;
+  final Teacher teacher;
 
   const TeacherProfile({super.key, required this.teacher});
 
@@ -10,7 +14,7 @@ class TeacherProfile extends StatefulWidget {
 }
 
 class _TeacherProfileState extends State<TeacherProfile> {
-  List<String> classes = [];
+  List<Classroom> classes = [];
   String? selectedSubject;
   String? selectedClassCode;
 
@@ -24,99 +28,23 @@ class _TeacherProfileState extends State<TeacherProfile> {
   @override
   void initState() {
     super.initState();
-    if (widget.teacher['classes'] != null) {
-      classes = List<String>.from(widget.teacher['classes']);
+    if (widget.teacher.classroom != null) {
+      classes = List<Classroom>.from(widget.teacher.classroom);
     }
   }
 
   void _showEditDialog() {
-
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Edit Classes'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DropdownButton<String>(
-                value: selectedSubject,
-                hint: const Text('Select a subject'),
-                onChanged: (String? newSubject) {
-                  setState(() {
-                    selectedSubject = newSubject;
-                    selectedClassCode = null;
-                  });
-                },
-                items: availableClasses.keys.map<DropdownMenuItem<String>>((subject) {
-                  return DropdownMenuItem<String>(
-                    value: subject,
-                    child: Text(subject),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 16),
-              if (selectedSubject != null)
-                DropdownButton<String>(
-                  value: selectedClassCode,
-                  hint: const Text('Select class'),
-                  onChanged: (String? newClassCode) {
-                    setState(() {
-                      selectedClassCode = newClassCode;
-                    });
-                  },
-                  items: availableClasses[selectedSubject]!
-                      .map<DropdownMenuItem<String>>((classCode) {
-                    return DropdownMenuItem<String>(
-                      value: classCode,
-                      child: Text(classCode),
-                    );
-                  }).toList(),
-                ),
-              const SizedBox(height: 16),
-              ...classes.map((className) {
-                return ListTile(
-                  title: Text(className),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () {
-                      setState(() {
-                        classes.remove(className);
-                      });
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                );
-              }).toList(),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (selectedClassCode != null &&
-                    !classes.contains('$selectedSubject $selectedClassCode')) {
-                  setState(() {
-                    classes.add('$selectedSubject $selectedClassCode');
-                    selectedClassCode = null;
-                  });
-                  Navigator.of(context).pop();
-                } else if (selectedClassCode == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please select a class code')),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Class code already exists')),
-                  );
-                }
-              },
-              child: const Text('Add Class'),
-            ),
-          ],
+        return EditClassesDialog(
+          availableClasses: availableClasses,
+          initialClasses: classes,
+          onClassesUpdated: (dynamic updatedClasses) {
+            setState(() {
+              classes = updatedClasses;
+            });
+          },
         );
       },
     );
@@ -124,9 +52,11 @@ class _TeacherProfileState extends State<TeacherProfile> {
 
   @override
   Widget build(BuildContext context) {
+    print('widget.teacher di teacher profile');
+    print(widget.teacher.classroom.map((classr) => classr.id));
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.teacher['name'], style: const TextStyle(fontSize: 24)),
+        title: Text(widget.teacher.name, style: const TextStyle(fontSize: 24)),
         backgroundColor: const Color.fromARGB(255, 231, 125, 11),
         actions: [
           IconButton(
@@ -149,7 +79,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
               CircleAvatar(
                 radius: 50,
                 backgroundColor: Colors.grey[200],
-                child: widget.teacher['profilePic'] == 'icon'
+                child: widget.teacher.name == 'icon'
                     ? Icon(
                         Icons.person,
                         size: 50,
@@ -159,13 +89,14 @@ class _TeacherProfileState extends State<TeacherProfile> {
               ),
               const SizedBox(height: 16),
               Text(
-                widget.teacher['name'],
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                widget.teacher.name,
+                style:
+                    const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
-                'ID: ${widget.teacher['id']}',
+                'ID: ${widget.teacher.user_id}',
                 style: const TextStyle(fontSize: 18),
                 textAlign: TextAlign.center,
               ),
@@ -181,7 +112,7 @@ class _TeacherProfileState extends State<TeacherProfile> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Text(
-                      classCode,
+                      '${widget.teacher.classroom.map((classr) => classr.id)}',
                       style: const TextStyle(fontSize: 18),
                       textAlign: TextAlign.center,
                     ),
@@ -192,6 +123,184 @@ class _TeacherProfileState extends State<TeacherProfile> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class EditClassesDialog extends StatefulWidget {
+  final Map<String, List<String>> availableClasses;
+  final List<Classroom> initialClasses;
+  final ValueChanged<List<String>> onClassesUpdated;
+
+  const EditClassesDialog({
+    Key? key,
+    required this.availableClasses,
+    required this.initialClasses,
+    required this.onClassesUpdated,
+  }) : super(key: key);
+
+  @override
+  _EditClassesDialogState createState() => _EditClassesDialogState();
+}
+
+class _EditClassesDialogState extends State<EditClassesDialog> {
+  late List<Classroom> classes;
+  String? selectedSubject;
+  String? selectedClassCode;
+
+  Future<dynamic> getAllSubject() {
+    final results = GradeService().getAllSubject();
+    print('results di grade');
+    print(results);
+    return results;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    classes = List<Classroom>.from(widget.initialClasses);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Edit Classes'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FutureBuilder(
+              future: getAllSubject(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasError) {
+                    return Center(
+                      child: Text('${snapshot.error} has occured'),
+                    );
+                  } else if (snapshot.hasData) {
+                    final data = snapshot.data as List<Subject>;
+                    print('data di teacherprofile subject');
+                    print(data);
+                    return DropdownButton<String>(
+                      value: selectedSubject,
+                      hint: const Text('Select a subject'),
+                      onChanged: (String? newSubject) {
+                        print('newSubject');
+                        print(newSubject);
+                        setState(() {
+                          selectedSubject = newSubject;
+                          // selectedClassCode =
+                          //     null; // Reset class code on subject change
+                        });
+                      },
+                      items: data.map<DropdownMenuItem<String>>((subject) {
+                        return DropdownMenuItem<String>(
+                          value: subject.name,
+                          child: Text(subject.name),
+                        );
+                      }).toList(),
+                    );
+                  }
+                }
+                return Center(child: CircularProgressIndicator());
+              }),
+          const SizedBox(height: 16),
+          if (selectedSubject != null)
+            DropdownButton<String>(
+              value: selectedClassCode,
+              hint: const Text('Select class'),
+              onChanged: (String? newClassCode) {
+                setState(() {
+                  selectedClassCode = newClassCode;
+                });
+              },
+              items: widget.availableClasses[selectedSubject]!
+                  .map<DropdownMenuItem<String>>((classCode) {
+                return DropdownMenuItem<String>(
+                  value: classCode,
+                  child: Text(classCode),
+                );
+              }).toList(),
+            ),
+          // DropdownButton<String>(
+          //   value: selectedSubject,
+          //   hint: const Text('Select a subject'),
+          //   onChanged: (String? newSubject) {
+          //     setState(() {
+          //       selectedSubject = newSubject;
+          //       selectedClassCode = null; // Reset class code on subject change
+          //     });
+          //   },
+          //   items: widget.availableClasses.keys
+          //       .map<DropdownMenuItem<String>>((subject) {
+          //     return DropdownMenuItem<String>(
+          //       value: subject,
+          //       child: Text(subject),
+          //     );
+          //   }).toList(),
+          // ),
+
+          // const SizedBox(height: 16),
+          // if (selectedSubject != null)
+          //   DropdownButton<String>(
+          //     value: selectedClassCode,
+          //     hint: const Text('Select class'),
+          //     onChanged: (String? newClassCode) {
+          //       setState(() {
+          //         selectedClassCode = newClassCode;
+          //       });
+          //     },
+          //     items: widget.availableClasses[selectedSubject]!
+          //         .map<DropdownMenuItem<String>>((classCode) {
+          //       return DropdownMenuItem<String>(
+          //         value: classCode,
+          //         child: Text(classCode),
+          //       );
+          //     }).toList(),
+          //   ),
+          const SizedBox(height: 16),
+          ...classes.map((className) {
+            return ListTile(
+              title: Text(className.id),
+              trailing: IconButton(
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  setState(() {
+                    classes.remove(className);
+                  });
+                },
+              ),
+            );
+          }).toList(),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (selectedClassCode != null &&
+                !classes.contains('$selectedSubject $selectedClassCode')) {
+              setState(() {
+                // classes.add('$selectedSubject $selectedClassCode');
+                // selectedClassCode = null; // Reset the selected class code
+              });
+              // widget.onClassesUpdated(classes); // Notify parent widget
+              Navigator.of(context).pop();
+            } else if (selectedClassCode == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please select a class code')),
+              );
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Class code already exists')),
+              );
+            }
+          },
+          child: const Text('Add Class'),
+        ),
+      ],
     );
   }
 }

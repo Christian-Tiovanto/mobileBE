@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const Align(
                       alignment: Alignment.topLeft,
-                      child: Text('TEACHER ID'),
+                      child: Text('TEACHER EMAIL'),
                     ),
                     TextField(
                       controller: idEditingController,
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Color.fromARGB(255, 231, 225, 213),
                           ),
                         ),
-                        hintText: 'Enter Your ID',
+                        hintText: 'Enter Your Email',
                         fillColor: const Color.fromARGB(255, 231, 225, 213),
                         filled: true,
                       ),
@@ -115,16 +115,21 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () async {
-                          try {
-                            final response = await TeacherService().login(
-                                idEditingController.text,
-                                passwordEditingController.text,
-                                context);
+                          if (idEditingController.text == 'admin' &&
+                              passwordEditingController.text == '123456') {
+                            Navigator.pushNamed(context, '/admin-page');
+                          } else {
+                            try {
+                              final response = await TeacherService().login(
+                                  idEditingController.text,
+                                  passwordEditingController.text,
+                                  context);
 
-                            Navigator.pushNamed(context, '/dashboard');
-                          } catch (e) {
-                            print('error ini di login screen');
-                            print(e);
+                              Navigator.pushNamed(context, '/dashboard');
+                            } catch (e) {
+                              print('error ini di login screen');
+                              print(e);
+                            }
                           }
                         },
                         child: const Text(

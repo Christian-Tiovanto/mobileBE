@@ -13,7 +13,8 @@ import 'package:mobile_be/pages/teachers/teacher_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
+const String baseHost = '127.0.0.1';
+const String basePort = '3006';
 Future<bool> isLoggedIn() async {
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('token');
@@ -21,6 +22,7 @@ Future<bool> isLoggedIn() async {
 }
 
 void main() async {
+  print('ea');
   WidgetsFlutterBinding.ensureInitialized();
   final loggedIn = await isLoggedIn();
   print('loggedIn');
@@ -61,6 +63,8 @@ class MainApp extends StatelessWidget {
                     ));
           case '/choose-class-grade':
             return MaterialPageRoute(builder: (context) => ChooseClassPage());
+          case '/admin-page':
+            return MaterialPageRoute(builder: (context) => TeacherScreenHttp());
           case '/announcements':
             return MaterialPageRoute(
                 builder: (context) => const AnnouncementScreen());
@@ -78,7 +82,6 @@ class MainApp extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => const LoginPage());
         }
       },
-
     );
   }
 }

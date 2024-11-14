@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:mobile_be/main.dart';
 import 'package:mobile_be/model/grade-model.dart';
 import 'package:mobile_be/pages/grade/lessongrade.dart';
 
 class GradeService {
   Future getAllSubject() async {
-    final url = Uri.parse('http://172.17.0.140:3006/api/v1/grade/subject');
+    final url = Uri.parse('http://$baseHost:$basePort/api/v1/grade/subject');
     try {
       print('ini di grade service getAllSubject');
       final response = await http.get(
@@ -30,7 +31,7 @@ class GradeService {
   Future getStudentGrade(
       String userId, String subject, String classroom) async {
     final url = Uri.parse(
-        'http://172.17.0.140:3006/api/v1/grade/$userId/subject/$subject/class/$classroom/tahun/2023');
+        'http://$baseHost:$basePort/api/v1/grade/$userId/subject/$subject/class/$classroom/tahun/2023');
     try {
       print('ini di grade service getStudentGrade');
       final response = await http.get(
