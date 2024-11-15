@@ -72,6 +72,20 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
             ElevatedButton(
               onPressed: () async {
                 try {
+                  if (phoneNumController.text.length != 12) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Code to execute when 'Undo' is pressed
+                            print('Undo action');
+                          },
+                        ),
+                        content: Text('phone num must be 12 character')));
+                    return;
+                  }
+                  ;
                   final response = await TeacherService().registerTeacher(
                       nameController.text,
                       emailController.text,
@@ -85,6 +99,17 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                 } catch (error) {
                   print('error di addteacher');
                   print(error);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          // Code to execute when 'Undo' is pressed
+                          print('Undo action');
+                        },
+                      ),
+                      content: Text('$error')));
+                  return;
                 }
               },
               child: const Text('Add Teacher'),

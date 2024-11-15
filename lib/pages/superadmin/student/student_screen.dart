@@ -72,6 +72,19 @@ class _StudentScreenState extends State<StudentScreen> {
             ElevatedButton(
               onPressed: () async {
                 try {
+                  if (phoneNumController.text.length != 12) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 2),
+                        action: SnackBarAction(
+                          label: 'Undo',
+                          onPressed: () {
+                            // Code to execute when 'Undo' is pressed
+                            print('Undo action');
+                          },
+                        ),
+                        content: Text('phone num must be 12 character')));
+                    return;
+                  }
                   final response = await StudentService().registerStudent(
                       nameController.text,
                       emailController.text,
@@ -85,6 +98,16 @@ class _StudentScreenState extends State<StudentScreen> {
                 } catch (error) {
                   print('error di addStudent');
                   print(error);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      duration: Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        onPressed: () {
+                          // Code to execute when 'Undo' is pressed
+                          print('Undo action');
+                        },
+                      ),
+                      content: Text('$error')));
                 }
               },
               child: const Text('Add Student'),
