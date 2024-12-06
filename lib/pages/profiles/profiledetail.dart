@@ -164,12 +164,6 @@ class _ProfileDetailState extends State<ProfileDetail> {
             // Student Details
             detailItem('Student Id', 'ST0001'),
             detailItem('Name', 'Angela Yang'),
-            detailItem('Place, Date of Birth', 'Medan, 23 October 2005'),
-            detailItem('Religion', 'Buddhist'),
-            detailItem('Gender', 'Female'),
-            detailItem('Address', 'Jl. Duyung no 89A'),
-            detailItem('Mother\'s Name', 'Alicia'),
-            detailItem('Father\'s Name', 'Anton'),
             detailItem('Phone Number', '081675892165\n082653874910'),
           ],
         ),
