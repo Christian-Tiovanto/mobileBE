@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mobile_be/services/teacher-service.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,12 +13,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final idEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
+  final idEditingController = TextEditingController();
+  final passwordEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          IconButton(
+            onPressed:  () {
+              Navigator.pushNamed(context, '/settings');
+            },
+            icon: const Icon(Icons.settings))
+        ],
+      ),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
@@ -29,12 +42,8 @@ class _LoginPageState extends State<LoginPage> {
                 width: 300,
                 child: Image(image: AssetImage('image/logo.jpeg')),
               ),
-              const Text(
-                "Welcome Back",
-                style: TextStyle(fontSize: 40),
-              ),
-              const Text(
-                "Teachers",
+              Text(
+                AppLocalizations.of(context)!.welcome_login,
                 style: TextStyle(fontSize: 40),
               ),
               Container(
@@ -50,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const Align(
                       alignment: Alignment.topLeft,
-                      child: Text('TEACHER EMAIL'),
+                      child: Text('EMAIL'),
                     ),
                     TextField(
                       controller: idEditingController,
@@ -67,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Color.fromARGB(255, 231, 225, 213),
                           ),
                         ),
-                        hintText: 'Enter Your Email',
+                        hintText: AppLocalizations.of(context)!.email_hint,
                         fillColor: const Color.fromARGB(255, 231, 225, 213),
                         filled: true,
                       ),
@@ -97,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         fillColor: const Color.fromARGB(255, 231, 225, 213),
                         filled: true,
-                        hintText: 'Your Password',
+                        hintText: AppLocalizations.of(context)!.pass_hint,
                       ),
                     ),
                     const SizedBox(
@@ -132,8 +141,8 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           }
                         },
-                        child: const Text(
-                          'Login',
+                        child: Text(
+                          AppLocalizations.of(context)!.login,  
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -145,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                         onTap: () {
                           Navigator.pushNamed(context, '/forgot-password');
                         },
-                        child: const Text('Forget Password'))
+                        child: Text(AppLocalizations.of(context)!.forgetpass)),
                   ],
                 ),
               ),
