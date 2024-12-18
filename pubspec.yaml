@@ -15,13 +15,23 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.2.3
   image_picker: ^0.8.3
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.1.2
+
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
+  intl_translation: ^0.20.1
+  build_runner: ^2.4.13
 
 flutter:
   uses-material-design: true
+  generate: true
   assets:
+    - lib/l10n/
     - image/
