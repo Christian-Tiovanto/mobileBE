@@ -65,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    _loadJwtToken();
+    // _loadJwtToken();
   }
 
   File? _selectedImage = null;
