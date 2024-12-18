@@ -160,7 +160,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: ListView(
           children: [
             _buildUserInfoCard(),
             const SizedBox(height: 20),

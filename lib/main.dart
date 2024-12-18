@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/pages/schedules/schedulescreen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mobile_be/l10n/l10n.dart';
@@ -8,6 +9,7 @@ import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/pages/authentication/forgot_password_screen.dart';
 import 'package:mobile_be/pages/authentication/insert_new_password.dart';
 import 'package:mobile_be/pages/authentication/login_screen.dart';
+import 'package:mobile_be/pages/profiles/profilescreen.dart';
 import 'package:mobile_be/pages/settings/settings.dart';
 import 'package:mobile_be/pages/superadmin/classes/class_screen.dart';
 import 'package:mobile_be/pages/dashboard/dashboard_screen.dart';
@@ -67,7 +69,12 @@ class MainApp extends StatelessWidget {
       supportedLocales: L10n.all,
       locale: localeProvider.locale,
       debugShowCheckedModeBanner: false,
+
+//       home: Schedulescreen(),
+      // home: isLoggedIn ? Dashboard() : LoginPage(),
+
       home: isLoggedIn ? const Dashboard() : const LoginPage(),
+
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case '/login':
