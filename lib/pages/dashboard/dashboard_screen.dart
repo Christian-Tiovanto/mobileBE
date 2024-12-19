@@ -65,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    // _loadJwtToken();
+    _loadJwtToken();
   }
 
   File? _selectedImage = null;
@@ -151,6 +151,7 @@ class _DashboardState extends State<Dashboard> {
             ),
             InkWell(
               onTap: () {
+                Navigator.pushNamed(context, '/schedule');
                 print('to be implemented');
               },
               child: const Card(
@@ -443,6 +444,8 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/student-profiles');
                                     print("wow");
                                   },
                                   child: Container(
@@ -485,6 +488,7 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    Navigator.pushNamed(context, '/schedule');
                                     print('ea');
                                   },
                                   child: Container(

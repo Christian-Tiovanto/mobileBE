@@ -15,7 +15,7 @@ class Teacher {
       required this.subject_teach});
 
   factory Teacher.fromJson(Map<String, dynamic> value) {
-    print('value di student');
+    print('value di teacher');
     print(value);
     return Teacher(
         id: value['_id'],

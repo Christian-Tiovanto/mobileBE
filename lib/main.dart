@@ -72,7 +72,7 @@ class MainApp extends StatelessWidget {
             supportedLocales: L10n.all,
             locale: localeProvider.locale,
             debugShowCheckedModeBanner: false,
-            home: isLoggedIn ? const Dashboard() : const Dashboard(),
+            home: isLoggedIn ? const Dashboard() : const LoginPage(),
             onGenerateRoute: (RouteSettings settings) {
               switch (settings.name) {
                 case '/login':
@@ -104,6 +104,12 @@ class MainApp extends StatelessWidget {
                 case '/announcements':
                   return MaterialPageRoute(
                       builder: (context) => const AnnouncementScreen());
+                case '/schedule':
+                  return MaterialPageRoute(
+                      builder: (context) => const Schedulescreen());
+                case '/student-profiles':
+                  return MaterialPageRoute(
+                      builder: (context) => const ProfileScreen());
                 case '/announcements/detail':
                   final args = settings.arguments as Map<String, dynamic>;
                   return MaterialPageRoute(

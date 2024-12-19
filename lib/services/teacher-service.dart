@@ -102,6 +102,8 @@ class TeacherService {
       final data = jsonDecode(response.body)['data'];
       print('jsonDecode(response.body) di getClass');
       if (response.statusCode == 200) {
+        print('asdfasdf');
+        print(data);
         return List<Teacher>.from(
             data.map((teacher) => Teacher.fromJson(teacher)));
       } else {
