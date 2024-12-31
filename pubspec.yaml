@@ -15,7 +15,7 @@ dependencies:
   http: ^1.2.2
   shared_preferences: ^2.2.3
   image_picker: ^0.8.3
-  flutter_localization:
+  flutter_localizations:
     sdk: flutter
   provider: ^6.1.2
 
