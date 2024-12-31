@@ -294,7 +294,7 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
               print(error);
             }
           },
-          child: const Text('Edit Class And Subject'),
+          child: const Text('Edit Class And Subjectasdf'),
         ),
       ],
     );
