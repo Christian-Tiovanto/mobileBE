@@ -30,7 +30,7 @@ class TeacherService {
       print(response.body);
       if (response.statusCode == 200) {
         print("prefs.setstring di login service");
-        prefs.setString("token", jsonDecode(response.body)['token']);
+        await prefs.setString("token", jsonDecode(response.body)['token']);
         print("eaaaa");
         return true;
       } else {

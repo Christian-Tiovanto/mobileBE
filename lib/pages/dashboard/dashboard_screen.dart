@@ -21,6 +21,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String? _jwtToken;
   late SharedPreferences _prefs;
+  bool _isLoading = true;
   Map<String, dynamic>? _jwtPayload;
   Future _pickImageFromGallery() async {
     final returnedImage =
@@ -45,6 +46,7 @@ class _DashboardState extends State<Dashboard> {
       setState(() {
         _jwtToken = token;
         _jwtPayload = decodeJwtPayload(token);
+        _isLoading = false;
       });
     }
   }
@@ -71,9 +73,11 @@ class _DashboardState extends State<Dashboard> {
   File? _selectedImage = null;
   @override
   Widget build(BuildContext context) {
-    print('this._jwtPayload');
-    print(this._jwtPayload);
-    print('/api/v1/teacher/${this._jwtPayload!['id']}/photo');
+    if (_isLoading) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return Scaffold(
       drawer: Drawer(
         surfaceTintColor: Colors.white,
