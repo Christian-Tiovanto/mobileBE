@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/model/studentmodel.dart';
+import 'package:mobile_be/services/student-service.dart';
 
 class ProfileDetail extends StatefulWidget {
-  final String studentName;
-  const ProfileDetail({super.key, required this.studentName});
+  final String userId;
+  const ProfileDetail({super.key, required this.userId});
 
   @override
   State<ProfileDetail> createState() => _ProfileDetailState();
 }
 
 class _ProfileDetailState extends State<ProfileDetail> {
+  Future<dynamic> getStudentByUserId(String userId) {
+    final results = StudentService().getStudentByUserId(userId);
+    print('results di grade');
+    print(results);
+    return results;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,9 +171,27 @@ class _ProfileDetailState extends State<ProfileDetail> {
             const SizedBox(height: 20),
 
             // Student Details
-            detailItem('Student Id', 'ST0001'),
-            detailItem('Name', 'Angela Yang'),
-            detailItem('Phone Number', '081675892165\n082653874910'),
+            FutureBuilder(
+                future: getStudentByUserId(widget.userId),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('${snapshot.error} has occured'),
+                      );
+                    } else if (snapshot.hasData) {
+                      final data = snapshot.data as Student;
+                      return Column(
+                        children: [
+                          detailItem('Student Id', data.user_id),
+                          detailItem('Name', data.name),
+                          detailItem('Phone Number', '${data.phone_number}'),
+                        ],
+                      );
+                    }
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }),
           ],
         ),
       ),

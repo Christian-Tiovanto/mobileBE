@@ -19,16 +19,20 @@ class AnnouncementDetail extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 231, 125, 11),
-        title: const Padding(
-          padding: EdgeInsets.only(left: 20),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 20),
           child: Text(
-            'Announcement Detail',
-            style: TextStyle(fontSize: 30, color: Colors.white),
+            title,
+            style: const TextStyle(
+              fontSize: 30,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         toolbarHeight: 100,
       ),
-      body: SingleChildScrollView( // Allow scrolling for long content
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,19 +50,18 @@ class AnnouncementDetail extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                date,
+                style: const TextStyle(fontSize: 24),
+              ),
             ),
             const SizedBox(height: 10),
             Text(
               description,
-              style: const TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              date,
-              style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
+              style: const TextStyle(
+                fontSize: 16,
+              ),
             ),
           ],
         ),

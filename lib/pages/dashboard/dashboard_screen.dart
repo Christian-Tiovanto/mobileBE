@@ -9,6 +9,7 @@ import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,14 +22,57 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String? _jwtToken;
   late SharedPreferences _prefs;
-  bool _isLoading = true;
   Map<String, dynamic>? _jwtPayload;
-  Future _pickImageFromGallery() async {
-    final returnedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-    setState(() {
-      _selectedImage = File(returnedImage!.path);
-    });
+  bool _isLoading = true;
+  Future<void> _pickImageFromGallery() async {
+    // Check Android version
+    final androidVersion = Platform.version.split(' ')[0];
+    final isAndroid13OrHigher = int.parse(androidVersion.split('.')[0]) >= 13;
+
+    if (isAndroid13OrHigher) {
+      // For Android 13 (API 33) and above
+      var status = await Permission.photos.request();
+      if (status.isGranted) {
+        // Access gallery
+        final returnedImage =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (returnedImage != null) {
+          setState(() {
+            _selectedImage = File(returnedImage.path);
+          });
+        }
+      } else if (status.isDenied) {
+        // Handle denied permission
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Gallery access denied")),
+        );
+      } else if (status.isPermanentlyDenied) {
+        // Open app settings if permission is permanently denied
+        openAppSettings();
+      }
+    } else {
+      // For Android versions 10–12 (API 29-32)
+      var status2 = await Permission.storage.request();
+
+      if (status2.isGranted) {
+        // Access gallery
+        final returnedImage =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (returnedImage != null) {
+          setState(() {
+            _selectedImage = File(returnedImage.path);
+          });
+        }
+      } else if (status2.isDenied) {
+        // Handle denied permission
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Gallery access denied")),
+        );
+      } else if (status2.isPermanentlyDenied) {
+        // Open app settings if permission is permanently denied
+        openAppSettings();
+      }
+    }
   }
 
   Future<void> _loadJwtToken() async {
@@ -528,7 +572,7 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    print("wow");
+                                    Navigator.pushNamed(context, '/report');
                                   },
                                   child: Container(
                                     width: 100,

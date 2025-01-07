@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/pages/report/grade_report.dart';
+import 'package:mobile_be/pages/report/student_report.dart';
 import 'package:mobile_be/pages/schedules/schedulescreen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -110,6 +112,9 @@ class MainApp extends StatelessWidget {
                 case '/student-profiles':
                   return MaterialPageRoute(
                       builder: (context) => const ProfileScreen());
+                case '/report':
+                  return MaterialPageRoute(
+                      builder: (context) => StudentReport());
                 case '/announcements/detail':
                   final args = settings.arguments as Map<String, dynamic>;
                   return MaterialPageRoute(

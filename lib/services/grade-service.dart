@@ -55,6 +55,33 @@ class GradeService {
     }
   }
 
+  Future getStudentNItsGrade(String userId, String classroom) async {
+    final url = Uri.parse(
+        'http://$baseHost:$basePort/api/v1/grade/$userId/class/$classroom/tahun/2023');
+    try {
+      print('ini di grade service getStudentGrade');
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print('jsonDecode(response.body) di gradestudent');
+      print(jsonDecode(response.body));
+      final data = jsonDecode(response.body)['data'];
+      if (response.statusCode == 200) {
+        return List<Grade>.from(data.map((grade) => Grade.fromJson(grade)));
+        // Grade.fromJson(jsonDecode(response.body)['data']);
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('error di get studentNItsgrade');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
   Future createEmptyGradeBulk(
       String subject, String class_id, String teacherId) async {
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/grade/bulk");

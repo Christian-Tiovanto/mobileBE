@@ -38,6 +38,36 @@ class StudentService {
     }
   }
 
+  Future getStudentByUserId(String userId) async {
+    print('userId di student service');
+    print(userId);
+    final url = Uri.parse("http://$baseHost:$basePort/api/v1/student/$userId");
+    try {
+      print('ini di student service getstudentbyclassid');
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print('response.statusCode');
+      print(response.statusCode);
+      print(jsonDecode(response.body));
+      final data = jsonDecode(response.body)['data'];
+      print('data di studentservice');
+      print(data);
+      if (response.statusCode == 200) {
+        return Student.fromJson(data);
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
   Future getAllStudent() async {
     final prefs = await SharedPreferences.getInstance();
     final url =

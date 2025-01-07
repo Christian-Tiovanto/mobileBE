@@ -116,6 +116,36 @@ class TeacherService {
     }
   }
 
+  Future getTeacherById(String teacherId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final url =
+        Uri.parse("http://$baseHost:$basePort/api/v1/teacher/$teacherId");
+    try {
+      print('ini di teacher service');
+      final response = await http.get(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print(response.statusCode);
+      print(jsonDecode(response.body));
+      final data = jsonDecode(response.body)['data'];
+      print('jsonDecode(response.body) di getClass');
+      if (response.statusCode == 200) {
+        print('asdfasdf');
+        print(data);
+        return Teacher.fromJson(data);
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr di getTeacherById');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
   Future updateTeacheTeachNClass(
       String teacherUid, List<dynamic> classroom, List<dynamic> subject) async {
     final prefs = await SharedPreferences.getInstance();

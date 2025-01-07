@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mobile_be/model/attendance-model.dart';
+import 'package:mobile_be/model/studentmodel.dart';
+import 'package:mobile_be/model/teachermodel.dart';
+import 'package:mobile_be/services/attendance-service.dart';
+import 'package:mobile_be/services/student-service.dart';
+import 'package:mobile_be/services/teacher-service.dart';
+import 'package:mobile_be/utils/decode-jwt.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AttendanceDetail extends StatefulWidget {
   final DateTime selectedDate;
@@ -12,13 +20,44 @@ class AttendanceDetail extends StatefulWidget {
 
 class _AttendanceDetailState extends State<AttendanceDetail> {
   final Map<String, String> _attendanceStatus = {};
+  String? _jwtToken;
+  late SharedPreferences _prefs;
+  Map<String, dynamic>? _jwtPayload;
 
-  final List<String> _students = [
-    'Angela Yang',
-    'Benaro',
-    'Cherrilyn',
-    'Davin Alvaro',
-  ];
+  Future<dynamic> getAllStudent() async {
+    final _prefs = await SharedPreferences.getInstance();
+    String? token = _prefs.getString('token');
+    if (token == null) {
+      Navigator.pushNamed(context, '/login');
+      return;
+    }
+    _jwtPayload = decodeJwtPayload(token);
+    final Teacher teacher =
+        await TeacherService().getTeacherById(_jwtPayload!['id']);
+    print('teacher');
+    print('teacher.homeroom_class');
+    print(teacher.homeroom_class!.id);
+    final results =
+        await StudentService().getStudentByClassId(teacher.homeroom_class!.id);
+    print('results di grade');
+    print(results);
+    return results;
+  }
+
+  List<Student> _students = [];
+
+  Future _removeData() async {
+    print("kepanggil gak sih");
+    _prefs = await SharedPreferences.getInstance();
+    bool removed = await _prefs.remove('token');
+    if (removed) {
+      print(_prefs.getString('token'));
+      setState(() {});
+      print('Data removed successfully!');
+    } else {
+      print('Error removing data.');
+    }
+  }
 
   int _getCount(String status) {
     return _attendanceStatus.values.where((value) => value == status).length;
@@ -103,6 +142,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
             ),
             InkWell(
               onTap: () {
+                Navigator.pushNamed(context, '/schedule');
                 print('to be implemented');
               },
               child: const Card(
@@ -129,16 +169,49 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
                 ),
               ),
             ),
+            InkWell(
+              onTap: () async {
+                await _removeData();
+                setState(() {});
+                Navigator.pushNamed(context, '/login');
+              },
+              child: const Card(
+                child: Padding(
+                  padding: EdgeInsets.all(14.0),
+                  child: Text(
+                    "Log Out",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: const Text('Attendance'),
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () {},
+        leading: Builder(builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 20.0), // Apply padding here
+            child: InkWell(
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
+                size: 50,
+              ),
+            ),
+          );
+        }),
+        backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 20),
+          child: Text(
+            'Menu',
+            style: TextStyle(fontSize: 30, color: Colors.white),
+          ),
         ),
+        toolbarHeight: 100,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -163,7 +236,6 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   Widget _buildDateHeader() {
     String formattedDate =
         DateFormat('EEEE, d MMMM yyyy').format(widget.selectedDate);
-
     return Text(
       formattedDate,
       style: const TextStyle(
@@ -176,13 +248,13 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   Widget _buildAttendanceFields() {
     return Column(
       children: [
-        _buildAttendanceField('Present', _getCount('Present')),
+        _buildAttendanceField('Present', _getCount('present')),
         const SizedBox(height: 10),
-        _buildAttendanceField('Permission', _getCount('Permission')),
+        _buildAttendanceField('Permission', _getCount('izin')),
         const SizedBox(height: 10),
-        _buildAttendanceField('Sick', _getCount('Sick')),
+        _buildAttendanceField('Sick', _getCount('sakit')),
         const SizedBox(height: 10),
-        _buildAttendanceField('Absent', _getCount('Absent')),
+        _buildAttendanceField('Absent', _getCount('absen')),
       ],
     );
   }
@@ -217,7 +289,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
         onPressed: () {
           setState(() {
             for (var student in _students) {
-              _attendanceStatus[student] = 'Present';
+              _attendanceStatus[student.id] = 'present';
             }
           });
         },
@@ -236,59 +308,99 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   }
 
   Widget _buildStudentList() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-          ),
-        ],
-      ),
-      child: Column(
-        children:
-            _students.map((student) => _buildStudentRow(student)).toList(),
-      ),
+    return FutureBuilder(
+      future: getAllStudent(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text('${snapshot.error} has occured'),
+            );
+          } else if (snapshot.hasData) {
+            final data = snapshot.data as List<Student>;
+            _students = data;
+            if (data.length == 0) {
+              return Text("No Student in this class");
+            }
+            return Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                  ),
+                ],
+              ),
+              child: Column(
+                children: data
+                    .map(
+                        (student) => _buildStudentRow(student.id, student.name))
+                    .toList(),
+              ),
+            );
+          }
+        }
+        return Center(child: CircularProgressIndicator());
+      },
+      // child:
+      // Container(
+      //   padding: const EdgeInsets.all(16),
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.circular(10),
+      //     color: Colors.white,
+      //     boxShadow: [
+      //       BoxShadow(
+      //         color: Colors.grey.withOpacity(0.2),
+      //         spreadRadius: 2,
+      //         blurRadius: 5,
+      //       ),
+      //     ],
+      //   ),
+      //   child: Column(
+      //     children:
+      //         _students.map((student) => _buildStudentRow(student)).toList(),
+      //   ),
+      // ),
     );
   }
 
-  Widget _buildStudentRow(String name) {
+  Widget _buildStudentRow(String id, String studentName) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            name,
+            studentName,
             style: const TextStyle(fontSize: 16),
           ),
           DropdownButton<String>(
-            value: _attendanceStatus[name],
+            value: _attendanceStatus[id],
             items: const [
               DropdownMenuItem(
-                value: 'Present',
+                value: 'present',
                 child: Text('Present'),
               ),
               DropdownMenuItem(
-                value: 'Permission',
+                value: 'izin',
                 child: Text('Permission'),
               ),
               DropdownMenuItem(
-                value: 'Sick',
+                value: 'sakit',
                 child: Text('Sick'),
               ),
               DropdownMenuItem(
-                value: 'Absent',
+                value: 'absen',
                 child: Text('Absent'),
               ),
             ],
             onChanged: (value) {
               setState(() {
-                _attendanceStatus[name] = value!;
+                _attendanceStatus[id] = value!;
               });
             },
             hint: const Text('Select'),
@@ -301,7 +413,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
   Widget _buildSaveButton() {
     return Center(
       child: ElevatedButton(
-        onPressed: () {
+        onPressed: () async {
           if (_attendanceStatus.length < _students.length) {
             showDialog(
               context: context,
@@ -322,7 +434,27 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
               },
             );
           } else {
-            Navigator.pushReplacementNamed(context, '/attendance');
+            try {
+              final List<Map<String, dynamic>> createBulkAttendanceDto =
+                  _attendanceStatus.entries.map((entry) {
+                return {
+                  "user_id": entry.key,
+                  "status": entry.value,
+                  "class_id": "6A",
+                  "reason": "",
+                  "tahun_ajaran": "2023",
+                  "date": "${widget.selectedDate}"
+                };
+              }).toList();
+
+              await AttendanceService()
+                  .createBulkAttendance(createBulkAttendanceDto);
+              Navigator.pushReplacementNamed(context, '/attendance');
+            } catch (error) {
+              print(error);
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(error.toString())));
+            }
           }
         },
         style: ElevatedButton.styleFrom(
