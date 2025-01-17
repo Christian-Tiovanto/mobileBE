@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/pages/authentication/choose_role_screen.dart';
+import 'package:mobile_be/pages/authentication/choose_teacher_role.dart';
+import 'package:mobile_be/pages/dashboard/dashboard_screen-sub-teac.dart';
 import 'package:mobile_be/pages/report/grade_report.dart';
 import 'package:mobile_be/pages/report/student_report.dart';
 import 'package:mobile_be/pages/schedules/schedulescreen.dart';
@@ -10,7 +13,7 @@ import 'package:mobile_be/pages/announcement/announcement_screen.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/pages/authentication/forgot_password_screen.dart';
 import 'package:mobile_be/pages/authentication/insert_new_password.dart';
-import 'package:mobile_be/pages/authentication/login_screen.dart';
+import 'package:mobile_be/pages/authentication/login_screen_teacher.dart';
 import 'package:mobile_be/pages/profiles/profilescreen.dart';
 import 'package:mobile_be/pages/settings/settings.dart';
 import 'package:mobile_be/pages/superadmin/classes/class_screen.dart';
@@ -21,16 +24,25 @@ import 'package:mobile_be/pages/superadmin/admin-dashboard.dart';
 
 import 'package:mobile_be/pages/superadmin/teachers/teacher_screen.dart';
 import 'package:mobile_be/providers/Locale_provider.dart';
+import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String baseHost = '172.17.0.169';
+const String baseHost = '172.17.0.151';
 const String basePort = '3006';
-Future<bool> isLoggedIn() async {
+Future LoggedInRole() async {
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('token');
-  return token != null;
+  Map<String, dynamic> _jwtPayload = {"for_type": 'login'};
+  if (token != null) {
+    _jwtPayload = decodeJwtPayload(token);
+    print('_jwtPayload di main');
+    print(_jwtPayload);
+  }
+  print('_jwtPayload di luar main');
+  print(_jwtPayload);
+  return _jwtPayload['for_type'] != null ? _jwtPayload['for_type'] : '';
 }
 
 Future<Locale> savedLanguage() async {
@@ -44,7 +56,7 @@ Future<Locale> savedLanguage() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final currentLocale = await savedLanguage();
-  final loggedIn = await isLoggedIn();
+  final loggedIn = await LoggedInRole();
   print('current locale: $currentLocale');
   runApp(MainApp(
     isLoggedIn: loggedIn,
@@ -54,7 +66,7 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   final Locale initLocale;
-  final bool isLoggedIn;
+  final String isLoggedIn;
   const MainApp(
       {super.key, required this.isLoggedIn, required this.initLocale});
 
@@ -74,18 +86,31 @@ class MainApp extends StatelessWidget {
             supportedLocales: L10n.all,
             locale: localeProvider.locale,
             debugShowCheckedModeBanner: false,
-            home: isLoggedIn ? const Dashboard() : const LoginPage(),
+            home: isLoggedIn == 'homeroom_teacher'
+                ? const Dashboard()
+                : isLoggedIn == 'subject_teacher'
+                    ? DashboardSubjTeacher()
+                    : ChooseRoleScreen(),
             onGenerateRoute: (RouteSettings settings) {
               switch (settings.name) {
-                case '/login':
+                case '/':
                   return MaterialPageRoute(
-                      builder: (context) => const LoginPage());
+                      builder: (context) => const ChooseRoleScreen());
+                case '/login-teacher':
+                  return MaterialPageRoute(
+                      builder: (context) => LoginPageTeacher());
+                case '/choose-teacher-role':
+                  return MaterialPageRoute(
+                      builder: (context) => const ChooseTeacherRoleScreen());
                 case '/forgot-password':
                   return MaterialPageRoute(
                       builder: (context) => const ForgotPassword());
                 case '/dashboard':
                   return MaterialPageRoute(
                       builder: (context) => const Dashboard());
+                case '/dashboard-subj-teacher':
+                  return MaterialPageRoute(
+                      builder: (context) => const DashboardSubjTeacher());
                 case '/insert-new-password':
                   return MaterialPageRoute(
                       builder: (context) => const InsertNewPassword());
@@ -130,7 +155,7 @@ class MainApp extends StatelessWidget {
                       builder: (context) => const Settings());
                 default:
                   return MaterialPageRoute(
-                      builder: (context) => const LoginPage());
+                      builder: (context) => const ChooseRoleScreen());
               }
             },
           );

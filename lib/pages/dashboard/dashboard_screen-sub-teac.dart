@@ -5,21 +5,24 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mobile_be/pages/Assignment/Assignment/assignment_list.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
+import 'package:mobile_be/pages/dashboard/drawer-home-teacher.dart';
+import 'package:mobile_be/pages/grade/choose-class_screen_subj_teacher-assign.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({super.key});
+class DashboardSubjTeacher extends StatefulWidget {
+  const DashboardSubjTeacher({super.key});
 
   @override
-  State<Dashboard> createState() => _DashboardState();
+  State<DashboardSubjTeacher> createState() => _DashboardSubjTeacherState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
   String? _jwtToken;
   late SharedPreferences _prefs;
   Map<String, dynamic>? _jwtPayload;
@@ -123,128 +126,7 @@ class _DashboardState extends State<Dashboard> {
       );
     }
     return Scaffold(
-      drawer: Drawer(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        child: ListView(
-          children: [
-            Container(
-              width: 200,
-              height: 200,
-              color: Colors.white,
-              padding: const EdgeInsets.all(20),
-              child: Image.asset(
-                'image/logo.jpeg',
-              ),
-            ),
-            const Divider(
-              thickness: 3,
-              color: Color.fromARGB(255, 231, 125, 11),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Dashboard",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/attendance');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Attendance",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/grade');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Grade",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/announcements');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Announcements",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/schedule');
-                print('to be implemented');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Schedule",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Reports",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                await _removeData();
-                setState(() {});
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Log Out",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerHomeroomTeacher(),
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return Padding(
@@ -376,42 +258,9 @@ class _DashboardState extends State<Dashboard> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const AttendanceScreen()));
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: const Icon(
-                                      Icons.assignment_turned_in_sharp,
-                                      color: Colors.white,
-                                      size: 80,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Attendance",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/choose-class-grade');
+                                                ChooseClassSubjTeacherAssignmentPage()));
+                                    // Navigator.pushNamed(
+                                    //     context, '/choose-class-grade');
                                   },
                                   child: Container(
                                     width: 100,
@@ -439,13 +288,6 @@ class _DashboardState extends State<Dashboard> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: [
                           Expanded(
                             child: Column(
                               children: [
@@ -480,43 +322,6 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 const Text(
                                   "Announcements",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/student-profiles');
-                                    print("wow");
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/reading.png',
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Student Profile",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -572,7 +377,11 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/report');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ChooseClassSubjTeacherAssignmentPage()));
                                   },
                                   child: Container(
                                     width: 100,
@@ -582,11 +391,10 @@ class _DashboardState extends State<Dashboard> {
                                         color: Colors.amber,
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/report.png',
-                                      width: 50,
-                                      height: 50,
+                                    child: Icon(
+                                      Icons.assignment_turned_in_sharp,
                                       color: Colors.white,
+                                      size: 80,
                                     ),
                                   ),
                                 ),
@@ -594,7 +402,7 @@ class _DashboardState extends State<Dashboard> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  "Reports",
+                                  "Assignment",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),

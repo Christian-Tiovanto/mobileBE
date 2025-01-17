@@ -252,7 +252,9 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                   try {
                     classes.remove(classr);
                     final response = await TeacherService()
-                        .updateTeacheTeachNClass(widget.teacher.id, classes,
+                        .updateTeacheTeachNClass(
+                            widget.teacher.id,
+                            classes.map((el) => el.id).toList(),
                             widget.teacher.subject_teach);
                     if (response == true) {
                       setState(() {
@@ -280,14 +282,15 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
               print("ini di button editclass");
               print(selectedSubject);
               print(selectedClassCode);
-              final response = await TeacherService()
-                  .updateTeacheTeachNClass(widget.teacher.id, [
-                ...widget.teacher.classroom.map((val) => val.id),
-                selectedClassCode != null ? selectedClassCode : ''
-              ], [
-                ...widget.teacher.subject_teach,
-                selectedSubject != null ? selectedSubject : ''
-              ]);
+              final response = await TeacherService().updateTeacheTeachNClass(
+                  widget.teacher.id,
+                  [
+                    ...widget.teacher.classroom.map((val) => val.id),
+                    selectedClassCode != null ? selectedClassCode : ''
+                  ],
+                  selectedSubject != null
+                      ? selectedSubject!
+                      : widget.teacher.subject_teach);
               if (response == true) Navigator.of(context).pop();
             } catch (error) {
               print('error di teaccher profile');

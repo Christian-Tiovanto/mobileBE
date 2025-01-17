@@ -4,30 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPageTeacher extends StatefulWidget {
+  String? dashboardRoute;
+  String? forType;
+  LoginPageTeacher({super.key, this.dashboardRoute, this.forType});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPageTeacher> createState() => _LoginPageTeacherState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageTeacherState extends State<LoginPageTeacher> {
   final idEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    print('widget.dashboardRoute');
+    print(widget.dashboardRoute);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           IconButton(
-            onPressed:  () {
-              Navigator.pushNamed(context, '/settings');
-            },
-            icon: const Icon(Icons.settings))
+              onPressed: () {
+                Navigator.pushNamed(context, '/settings');
+              },
+              icon: const Icon(Icons.settings))
         ],
       ),
       body: SingleChildScrollView(
@@ -132,17 +135,20 @@ class _LoginPageState extends State<LoginPage> {
                               final response = await TeacherService().login(
                                   idEditingController.text,
                                   passwordEditingController.text,
-                                  context);
+                                  widget.forType!);
 
-                              Navigator.pushNamed(context, '/dashboard');
+                              Navigator.pushNamed(
+                                  context, '${widget.dashboardRoute}');
                             } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(e.toString())));
                               print('error ini di login screen');
                               print(e);
                             }
                           }
                         },
                         child: Text(
-                          AppLocalizations.of(context)!.login,  
+                          AppLocalizations.of(context)!.login,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

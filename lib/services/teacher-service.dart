@@ -12,11 +12,13 @@ import 'package:mobile_be/widget/awesome-dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TeacherService {
-  Future login(String email, String password, BuildContext context) async {
+  Future login(String email, String password, String for_type) async {
     final prefs = await SharedPreferences.getInstance();
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/teacher/login");
     try {
-      print('ini di teacher service');
+      print('ini di teacher service login');
+      print(email);
+      print(password);
       final response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -24,7 +26,8 @@ class TeacherService {
           body: jsonEncode(<String, String>{
             "type": "email",
             "email": email,
-            "password": password
+            "password": password,
+            'for_type': for_type
           }));
       print(response.statusCode);
       print(response.body);
@@ -147,12 +150,12 @@ class TeacherService {
   }
 
   Future updateTeacheTeachNClass(
-      String teacherUid, List<dynamic> classroom, List<dynamic> subject) async {
+      String teacherUid, List<dynamic> classroom, String? subject) async {
     final prefs = await SharedPreferences.getInstance();
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/teacher/$teacherUid");
     try {
-      print('ini di teacher service');
+      print('ini di teacher service updateTeacherNClass');
       print(url);
       print(classroom);
       print(subject);

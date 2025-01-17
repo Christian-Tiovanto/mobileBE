@@ -30,7 +30,7 @@ class _StudentReportState extends State<StudentReport> {
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString('token');
     if (token == null) {
-      Navigator.pushNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/login');
       return;
     }
     _jwtPayload = decodeJwtPayload(token);

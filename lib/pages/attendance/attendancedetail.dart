@@ -28,7 +28,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString('token');
     if (token == null) {
-      Navigator.pushNamed(context, '/login');
+      Navigator.pushReplacementNamed(context, '/login');
       return;
     }
     _jwtPayload = decodeJwtPayload(token);
@@ -173,7 +173,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
               onTap: () async {
                 await _removeData();
                 setState(() {});
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushReplacementNamed(context, '/login');
               },
               child: const Card(
                 child: Padding(

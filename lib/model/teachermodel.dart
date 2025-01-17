@@ -6,7 +6,7 @@ class Teacher {
   final String name;
   final String user_id;
   final List<dynamic> classroom;
-  final List<dynamic> subject_teach;
+  final String? subject_teach;
   final Classroom? homeroom_class;
   Teacher(
       {required this.id,
