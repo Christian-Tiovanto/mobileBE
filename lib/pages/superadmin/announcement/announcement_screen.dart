@@ -8,15 +8,18 @@ import 'package:mobile_be/database_helper.dart';
 import 'package:mobile_be/main.dart';
 import 'package:mobile_be/pages/announcement/ann_data.dart';
 import 'package:mobile_be/pages/announcement/announcement_detail.dart';
+import 'package:mobile_be/services/annoucement-service.dart';
 
-class AnnouncementScreen extends StatefulWidget {
-  const AnnouncementScreen({super.key});
+class AnnouncementSuperAdminScreen extends StatefulWidget {
+  const AnnouncementSuperAdminScreen({super.key});
 
   @override
-  State<AnnouncementScreen> createState() => _AnnouncementScreenState();
+  State<AnnouncementSuperAdminScreen> createState() =>
+      _AnnouncementSuperAdminScreenState();
 }
 
-class _AnnouncementScreenState extends State<AnnouncementScreen> {
+class _AnnouncementSuperAdminScreenState
+    extends State<AnnouncementSuperAdminScreen> {
   late Future<List<Announcement>> _announcementList;
 
   @override
@@ -120,6 +123,11 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                   date: dateController.text,
                 );
 
+                final String announcement_mongo_id = await AnnouncementService()
+                    .createAnnouncement(newAnnouncement, selectedImage!.path);
+                print('announcement_mongo_id');
+                print(announcement_mongo_id);
+                newAnnouncement.announcement_mongo_id = announcement_mongo_id;
                 if (announcement == null) {
                   await DatabaseHelper().insertAnnouncement(newAnnouncement);
                 } else {
@@ -196,6 +204,10 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         },
                       ),
                     ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () => _deleteAnnouncement(announcement.id!),
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -210,13 +222,18 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                         ),
                       );
                     },
-                    // onLongPress: () => _showAnnouncementDialog(announcement),
+                    onLongPress: () => _showAnnouncementDialog(announcement),
                   ),
                 );
               },
             );
           }
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(255, 231, 125, 11),
+        onPressed: () => _showAnnouncementDialog(),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

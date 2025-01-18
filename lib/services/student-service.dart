@@ -158,4 +158,38 @@ class StudentService {
       throw Exception(e.toString());
     }
   }
+
+  Future login(String email, String password, String for_type) async {
+    final prefs = await SharedPreferences.getInstance();
+    final url = Uri.parse("http://$baseHost:$basePort/api/v1/student/login");
+    try {
+      print('ini di teacher service login');
+      print(email);
+      print(password);
+      final response = await http.post(url,
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            "type": "email",
+            "email": email,
+            "password": password,
+            'for_type': for_type
+          }));
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200) {
+        print("prefs.setstring di login service");
+        await prefs.setString("token", jsonDecode(response.body)['token']);
+        print("eaaaa");
+        return true;
+      } else {
+        throw jsonDecode(response.body)['message'];
+      }
+    } catch (e) {
+      print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
 }

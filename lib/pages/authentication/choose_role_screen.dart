@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobile_be/pages/authentication/login_screen_student.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -95,22 +96,10 @@ class _ChooseRoleScreenState extends State<ChooseRoleScreen> {
                           ),
                         ),
                         onPressed: () async {
-                          if (idEditingController.text == 'admin' &&
-                              passwordEditingController.text == '123456') {
-                            Navigator.pushNamed(context, '/admin-page');
-                          } else {
-                            try {
-                              final response = await TeacherService().login(
-                                  idEditingController.text,
-                                  passwordEditingController.text,
-                                  '');
-
-                              Navigator.pushNamed(context, '/dashboard');
-                            } catch (e) {
-                              print('error ini di login screen');
-                              print(e);
-                            }
-                          }
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPageStudent()));
                         },
                         child: Text(
                           'Student',

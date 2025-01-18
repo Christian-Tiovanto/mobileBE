@@ -5,14 +5,14 @@ class Announcement {
   final String image;
   final String description;
   final String date;
-
-  Announcement({
-    this.id,
-    required this.title,
-    required this.image,
-    required this.description,
-    required this.date,
-  });
+  String? announcement_mongo_id;
+  Announcement(
+      {this.id,
+      required this.title,
+      required this.image,
+      required this.description,
+      required this.date,
+      this.announcement_mongo_id});
 
   factory Announcement.fromMap(Map<String, dynamic> map) {
     return Announcement(
@@ -21,6 +21,7 @@ class Announcement {
       image: map['image'],
       description: map['description'],
       date: map['date'],
+      announcement_mongo_id: map['announcement_mongo_id'],
     );
   }
 
@@ -31,6 +32,7 @@ class Announcement {
       'image': image,
       'description': description,
       'date': date,
+      'announcement_mongo_id': announcement_mongo_id,
     };
   }
 

@@ -1,17 +1,18 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mobile_be/services/student-service.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginPageStudent extends StatefulWidget {
+  LoginPageStudent({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginPageStudent> createState() => _LoginPageStudentState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageStudentState extends State<LoginPageStudent> {
   final idEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
 
@@ -123,21 +124,16 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         onPressed: () async {
-                          if (idEditingController.text == 'admin' &&
-                              passwordEditingController.text == '123456') {
-                            Navigator.pushNamed(context, '/admin-page');
-                          } else {
-                            try {
-                              final response = await TeacherService().login(
-                                  idEditingController.text,
-                                  passwordEditingController.text,
-                                  '');
+                          try {
+                            final response = await StudentService().login(
+                                idEditingController.text,
+                                passwordEditingController.text,
+                                'student');
 
-                              Navigator.pushNamed(context, '/dashboard');
-                            } catch (e) {
-                              print('error ini di login screen');
-                              print(e);
-                            }
+                            Navigator.pushNamed(context, '/dashboard-student');
+                          } catch (e) {
+                            print('error ini di login screen');
+                            print(e);
                           }
                         },
                         child: Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_be/pages/authentication/choose_role_screen.dart';
 import 'package:mobile_be/pages/authentication/choose_teacher_role.dart';
+import 'package:mobile_be/pages/dashboard/dashboard_screen-student.dart';
 import 'package:mobile_be/pages/dashboard/dashboard_screen-sub-teac.dart';
 import 'package:mobile_be/pages/report/grade_report.dart';
 import 'package:mobile_be/pages/report/student_report.dart';
@@ -26,6 +27,7 @@ import 'package:mobile_be/pages/superadmin/teachers/teacher_screen.dart';
 import 'package:mobile_be/providers/Locale_provider.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:provider/provider.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,6 +57,8 @@ Future<Locale> savedLanguage() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   final currentLocale = await savedLanguage();
   final loggedIn = await LoggedInRole();
   print('current locale: $currentLocale');
@@ -111,6 +115,9 @@ class MainApp extends StatelessWidget {
                 case '/dashboard-subj-teacher':
                   return MaterialPageRoute(
                       builder: (context) => const DashboardSubjTeacher());
+                case '/dashboard-student':
+                  return MaterialPageRoute(
+                      builder: (context) => const DashboardStudent());
                 case '/insert-new-password':
                   return MaterialPageRoute(
                       builder: (context) => const InsertNewPassword());
@@ -148,6 +155,7 @@ class MainApp extends StatelessWidget {
                       image: args['image'],
                       description: args['description'],
                       date: args['date'],
+                      file_url: '',
                     ),
                   );
                 case '/settings':

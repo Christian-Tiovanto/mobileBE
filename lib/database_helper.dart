@@ -26,7 +26,7 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE announcements(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, image TEXT, description TEXT, date TEXT)',
+          'CREATE TABLE announcements(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, image TEXT, description TEXT, date TEXT, announcement_mongo_id TEXT)',
         );
       },
     );
@@ -34,6 +34,8 @@ class DatabaseHelper {
 
   Future<void> insertAnnouncement(Announcement announcement) async {
     final db = await database;
+    print('announcement.toMap() di insertAnnouncement');
+    print(announcement.toMap());
     try {
       await db.insert(
         'announcements',

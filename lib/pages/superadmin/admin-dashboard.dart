@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_be/model/classroom-model.dart';
+import 'package:mobile_be/pages/announcement/announcement_screen.dart';
+import 'package:mobile_be/pages/superadmin/announcement/announcement_screen.dart';
 import 'package:mobile_be/pages/superadmin/classes/class_profile.dart';
 import 'package:mobile_be/pages/superadmin/classes/class_screen.dart';
 import 'package:mobile_be/pages/superadmin/grade/grade-admin.dart';
@@ -104,6 +106,27 @@ class _SuperadminDashboardState extends State<SuperadminDashboard> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => GradeAdminPage(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Card(
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              elevation: 4,
+              child: ListTile(
+                contentPadding: const EdgeInsets.all(16),
+                title: Text(
+                  'Announcements',
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AnnouncementSuperAdminScreen(),
                     ),
                   );
                 },

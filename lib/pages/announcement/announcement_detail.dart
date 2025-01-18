@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/main.dart';
 
 class AnnouncementDetail extends StatelessWidget {
   final String title;
   final String image;
   final String description;
   final String date;
+  final String file_url;
 
-  const AnnouncementDetail({
-    super.key,
-    required this.title,
-    required this.image,
-    required this.description,
-    required this.date,
-  });
+  const AnnouncementDetail(
+      {super.key,
+      required this.title,
+      required this.image,
+      required this.description,
+      required this.date,
+      required this.file_url});
 
   @override
   Widget build(BuildContext context) {
+    print('file_url');
+    print(file_url);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 231, 125, 11),
@@ -42,7 +46,7 @@ class AnnouncementDetail extends StatelessWidget {
               height: 170,
               color: Colors.amber,
               child: Image.network(
-                image,
+                'http://$baseHost:$basePort/api/v1/announcement/${file_url}/file',
                 fit: BoxFit.cover,
                 errorBuilder: (context, error, stackTrace) {
                   return const Center(child: Text('Image failed to load.'));

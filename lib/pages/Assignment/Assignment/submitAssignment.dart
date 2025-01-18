@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:mobile_be/model/assignment.dart'; // Untuk memilih file
+import 'package:mobile_be/model/assignment.dart';
+import 'package:mobile_be/services/assignment-service.dart'; // Untuk memilih file
 
 class SubmitAssignment extends StatefulWidget {
   final Assignment assignment;
@@ -27,11 +28,10 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
     }
   }
 
-  void _submitAssignment() {
+  void _submitAssignment() async {
     print('Submit button pressed'); // Debug log
 
-    // Check if both file and comment are empty
-    if (selectedFilePath == null && _commentController.text.isEmpty) {
+    if (selectedFilePath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please either attach a file or provide an answer'),
@@ -42,16 +42,12 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
 
     // Create the submission
     print('Creating submission'); // Debug log
-    final submission = Submission(
-      submitterName: 'John Doe', // Replace with the actual user
-      submissionTime: DateTime.now().toString(),
-      filePath: selectedFilePath ?? '', // Allow submitting without a file
-      comment: _commentController.text,
-    );
-
+    print(selectedFilePath);
+    await AssignmentService()
+        .submitSubmission(widget.assignment.assignment_id!, selectedFilePath);
     // Add the submission to the assignment's submissions list
     setState(() {
-      widget.assignment.submissions.add(submission);
+      // widget.assignment.submissions.add(submission);
       _isSubmitted = true; // Mark as submitted
     });
 
@@ -85,7 +81,7 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
             ),
             const SizedBox(height: 16),
             const Text(
-              'Attach your file or type down your answer (optional):',
+              'Attach your file',
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 8),
@@ -121,15 +117,6 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 8),
-            TextField(
-              controller: _commentController,
-              maxLines: 4,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Add your answer...',
-              ),
-            ),
-            const SizedBox(height: 16),
             Center(
               child: ElevatedButton(
                 onPressed: _isSubmitted

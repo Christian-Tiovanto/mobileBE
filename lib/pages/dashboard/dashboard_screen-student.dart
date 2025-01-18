@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/pages/Assignment/Assignment/assignment_list.dart';
+import 'package:mobile_be/pages/Assignment/Assignment/student_assignment_list.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/pages/dashboard/drawer-home-teacher.dart';
 import 'package:mobile_be/pages/dashboard/drawer-subj-teacher.dart';
@@ -17,14 +18,14 @@ import 'package:mobile_be/widget/ImageStreamWidget.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DashboardSubjTeacher extends StatefulWidget {
-  const DashboardSubjTeacher({super.key});
+class DashboardStudent extends StatefulWidget {
+  const DashboardStudent({super.key});
 
   @override
-  State<DashboardSubjTeacher> createState() => _DashboardSubjTeacherState();
+  State<DashboardStudent> createState() => _DashboardStudentState();
 }
 
-class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
+class _DashboardStudentState extends State<DashboardStudent> {
   String? _jwtToken;
   late BannerAd _bannerAd;
   bool _isBannerAdLoaded = false;
@@ -370,47 +371,11 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/schedule');
-                                    print('ea');
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/calendar.png',
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Schedule",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ChooseClassSubjTeacherAssignmentPage()));
+                                                StudentAssignmentList()));
                                   },
                                   child: Container(
                                     width: 100,
