@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_be/model/teachermodel.dart';
 import 'package:mobile_be/pages/superadmin/teachers/teacher_profile.dart';
-
-import 'package:flutter/material.dart';
 import 'package:mobile_be/pages/grade/grade_screen.dart';
-import 'package:mobile_be/model/studentmodel.dart';
+import 'package:mobile_be/model/studentmodel.dart'; 
 import 'package:mobile_be/services/student-service.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 
