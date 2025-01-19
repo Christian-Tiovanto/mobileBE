@@ -2,10 +2,12 @@
 // Added a button for creating announcements
 import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/database_helper.dart';
 import 'package:mobile_be/main.dart';
+import 'package:mobile_be/notifications/notifications.dart';
 import 'package:mobile_be/pages/announcement/ann_data.dart';
 import 'package:mobile_be/pages/announcement/announcement_detail.dart';
 import 'package:mobile_be/services/annoucement-service.dart';
@@ -39,12 +41,25 @@ class _AnnouncementSuperAdminScreenState
     _refreshAnnouncements();
   }
 
+  void showNotification(String title, String body){
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: 'basic_channel',
+        title: title,
+        body: body,
+      ),
+    );
+  }
+
+
   Future<void> _showAnnouncementDialog([Announcement? announcement]) async {
     final titleController = TextEditingController(text: announcement?.title);
     final descriptionController =
         TextEditingController(text: announcement?.description);
     final dateController = TextEditingController(text: announcement?.date);
     File? selectedImage;
+    Notifications _notify = Notifications(context);
 
     if (announcement != null && announcement.image.isNotEmpty) {
       selectedImage = File(announcement.image);
@@ -130,8 +145,10 @@ class _AnnouncementSuperAdminScreenState
                 newAnnouncement.announcement_mongo_id = announcement_mongo_id;
                 if (announcement == null) {
                   await DatabaseHelper().insertAnnouncement(newAnnouncement);
+                  _notify.createBasicNotification("New Announcement", "New Announcement has been added");
                 } else {
                   await DatabaseHelper().updateAnnouncement(newAnnouncement);
+                  _notify.createBasicNotification("Announcement Updated", "Announcement has been updated");
                 }
 
                 _refreshAnnouncements();
