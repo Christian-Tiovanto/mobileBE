@@ -156,6 +156,7 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
 
   String? selectedSubject;
   String? selectedClassCode;
+  String? selectedHomeroomClass;
 
   // Fetch classrooms data
   void getAllClassroom() async {
@@ -192,6 +193,27 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Text("Select Homeroom Class"),
+          DropdownButton<String>(
+            value: selectedHomeroomClass != null
+                ? selectedHomeroomClass
+                : widget.teacher.homeroom_class != null
+                    ? widget.teacher.homeroom_class!.id
+                    : null,
+            hint: const Text('Select Homeroom class'),
+            onChanged: (String? newClassCode) {
+              setState(() {
+                selectedHomeroomClass = newClassCode;
+              });
+            },
+            items: availableClasses.map<DropdownMenuItem<String>>((classCode) {
+              return DropdownMenuItem<String>(
+                value: classCode.id,
+                child: Text(classCode.id), // Display classCode.id
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 16),
           FutureBuilder<List<Subject>>(
             future: getAllSubject(), // Fetch both classrooms and subjects
             builder: (context, snapshot) {
@@ -255,7 +277,10 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                         .updateTeacheTeachNClass(
                             widget.teacher.id,
                             classes.map((el) => el.id).toList(),
-                            widget.teacher.subject_teach);
+                            widget.teacher.subject_teach,
+                            widget.teacher.homeroom_class != null
+                                ? widget.teacher.homeroom_class?.id
+                                : null);
                     if (response == true) {
                       setState(() {
                         classes.remove(classr);
@@ -290,14 +315,15 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                   ],
                   selectedSubject != null
                       ? selectedSubject!
-                      : widget.teacher.subject_teach);
+                      : widget.teacher.subject_teach,
+                  selectedHomeroomClass);
               if (response == true) Navigator.of(context).pop();
             } catch (error) {
               print('error di teaccher profile');
               print(error);
             }
           },
-          child: const Text('Edit Class And Subjectasdf'),
+          child: const Text('Edit Class And Subject'),
         ),
       ],
     );

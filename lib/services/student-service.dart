@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -188,6 +189,30 @@ class StudentService {
       }
     } catch (e) {
       print('errorrrr');
+      print(e);
+      throw Exception(e.toString());
+    }
+  }
+
+  Future updateStudentPhoto(String studentId, File image) async {
+    final url =
+        Uri.parse("http://$baseHost:$basePort/api/v1/student/$studentId/photo");
+    try {
+      print('ini di teacher service register');
+      print(url);
+      print(image.path);
+      final request = await http.MultipartRequest('PATCH', url);
+      final pic = await http.MultipartFile.fromPath('photo', image.path);
+      print('response di teacher register');
+      request.files.add(pic);
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        throw Exception('error update image');
+      }
+    } catch (e) {
+      print('errorrrr di update teacher photo');
       print(e);
       throw Exception(e.toString());
     }

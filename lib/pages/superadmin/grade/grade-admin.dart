@@ -47,37 +47,6 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Select Subject:', style: TextStyle(fontSize: 18)),
-              FutureBuilder<List<Subject>>(
-                future: getAllSubject(), // Fetch both classrooms and subjects
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    if (snapshot.hasError) {
-                      return Center(
-                        child: Text('${snapshot.error} occurred'),
-                      );
-                    } else if (snapshot.hasData) {
-                      final data = snapshot.data!;
-                      return DropdownButton<String>(
-                        value: selectedSubject,
-                        hint: const Text('Select a subject'),
-                        onChanged: (String? newSubject) {
-                          setState(() {
-                            selectedSubject = newSubject;
-                          });
-                        },
-                        items: data.map<DropdownMenuItem<String>>((subject) {
-                          return DropdownMenuItem<String>(
-                            value: subject.name,
-                            child: Text(subject.name),
-                          );
-                        }).toList(),
-                      );
-                    }
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
               SizedBox(height: 20),
               Text('Select Classroom:', style: TextStyle(fontSize: 18)),
               FutureBuilder<List<Classroom>>(
@@ -147,12 +116,9 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
                     try {
                       print('selectedClassroom');
                       print(selectedClassroom);
-                      print(selectedSubject);
                       print(selectedTeacher);
                       await GradeService().createEmptyGradeBulk(
-                          '$selectedSubject',
-                          '$selectedClassroom',
-                          '${selectedTeacher}');
+                          '$selectedClassroom', '${selectedTeacher}');
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           duration: Duration(seconds: 2),
                           action: SnackBarAction(

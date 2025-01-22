@@ -225,6 +225,8 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
               }
               final response = await StudentService()
                   .updateStudentClassById(widget.student.id, selectedCLass!);
+              await GradeService()
+                  .createEmptyGrade(selectedCLass!, widget.student.id);
               print(response);
               if (response == true) Navigator.of(context).pop();
               setState(() {});

@@ -19,7 +19,7 @@ class Attendance {
     return Attendance(
         user_id: value['user_id'],
         status: value['status'],
-        date: value['date'],
+        date: DateTime.parse(value['date']),
         class_id: value['class_id'],
         reason: value['reason'],
         tahun_ajaran: value['tahun_ajaran']);

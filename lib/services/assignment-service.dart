@@ -54,7 +54,8 @@ class AssignmentService {
     print('decodeJwtPayload(token!)');
     final studentId = decodeJwtPayload(token!)['id'];
     final url = Uri.parse(
-        "http://$baseHost:$basePort/api/v1/assignment/student/$studentId");
+        "http://$baseHost:$basePort/api/v1/submission/student/$studentId");
+    print(url);
     try {
       print('ini di assignment service getAllStudentAssignment');
       final response = await http.get(
@@ -114,11 +115,19 @@ class AssignmentService {
   }
 
   Future createAssignment(Assignment assignmentDto, String? image) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final tokenExist = prefs.containsKey('token');
+    if (!tokenExist) throw Exception('log in first');
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/assignment");
     try {
       print('ini di assignmentService createAssignment');
       print(url);
       final request = await http.MultipartRequest('POST', url);
+      request.headers.addAll({
+        'Authorization': 'Bearer $token', // Set the token here
+        'Content-Type': 'multipart/form-data',
+      });
       if (image != null) {
         final pic = await http.MultipartFile.fromPath('photo', image);
         request.files.add(pic);

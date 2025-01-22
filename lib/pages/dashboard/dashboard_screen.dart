@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
+import 'package:mobile_be/pages/dashboard/drawer-home-teacher.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
@@ -123,128 +124,7 @@ class _DashboardState extends State<Dashboard> {
       );
     }
     return Scaffold(
-      drawer: Drawer(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        child: ListView(
-          children: [
-            Container(
-              width: 200,
-              height: 200,
-              color: Colors.white,
-              padding: const EdgeInsets.all(20),
-              child: Image.asset(
-                'image/logo.jpeg',
-              ),
-            ),
-            const Divider(
-              thickness: 3,
-              color: Color.fromARGB(255, 231, 125, 11),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/dashboard');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Dashboard",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/attendance');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Attendance",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/grade');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Grade",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/announcements');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Announcements",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, '/schedule');
-                print('to be implemented');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Schedule",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Reports",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () async {
-                await _removeData();
-                setState(() {});
-                Navigator.pushReplacementNamed(context, '/');
-              },
-              child: const Card(
-                child: Padding(
-                  padding: EdgeInsets.all(14.0),
-                  child: Text(
-                    "Log Out",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: DrawerHomeroomTeacher(),
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return Padding(
@@ -531,42 +411,6 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       Row(
                         children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, '/schedule');
-                                    print('ea');
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/calendar.png',
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Schedule",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
                           Expanded(
                             child: Column(
                               children: [

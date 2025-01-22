@@ -8,10 +8,14 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_be/pages/Assignment/Assignment/assignment_list.dart';
 import 'package:mobile_be/pages/Assignment/Assignment/student_assignment_list.dart';
+import 'package:mobile_be/pages/attendance/attendance-student.dart';
 import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/pages/dashboard/drawer-home-teacher.dart';
+import 'package:mobile_be/pages/dashboard/drawer-student.dart';
 import 'package:mobile_be/pages/dashboard/drawer-subj-teacher.dart';
 import 'package:mobile_be/pages/grade/choose-class_screen_subj_teacher-assign.dart';
+import 'package:mobile_be/pages/report/student_grade.dart';
+import 'package:mobile_be/services/student-service.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
@@ -156,7 +160,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
       );
     }
     return Scaffold(
-      drawer: DrawerSubjTeacher(),
+      drawer: DrawerStudent(),
       appBar: AppBar(
         leading: Builder(builder: (context) {
           return Padding(
@@ -208,7 +212,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                         children: [
                           Text("Welcome Back"),
                           Text(
-                            'Teachers',
+                            'Student',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 26),
                           ),
@@ -227,7 +231,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                   CircleAvatar(
                                       child: ImageStreamWidget(
                                           imageUrl:
-                                              '/api/v1/teacher/${_jwtPayload!['id']}/photo')),
+                                              '/api/v1/student/${_jwtPayload!['id']}/photo')),
                                   ElevatedButton(
                                       onPressed: () {
                                         _pickImageFromGallery();
@@ -247,8 +251,8 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                   if (_selectedImage == null) {
                                     return Navigator.pop(context, 'OK');
                                   }
-                                  final response = await TeacherService()
-                                      .updateTeacherPhoto(
+                                  final response = await StudentService()
+                                      .updateStudentPhoto(
                                           _jwtPayload!['id'], _selectedImage!);
                                   print("response di update image berhasi");
                                   print(response);
@@ -265,7 +269,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                             child: CircleAvatar(
                                 child: ImageStreamWidget(
                                     imageUrl:
-                                        '/api/v1/teacher/${this._jwtPayload!['id']}/photo'))),
+                                        '/api/v1/student/${this._jwtPayload!['id']}/photo'))),
                       ))
                     ],
                   ),
@@ -288,7 +292,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ChooseClassSubjTeacherAssignmentPage()));
+                                                GradeStudentReport()));
                                     // Navigator.pushNamed(
                                     //     context, '/choose-class-grade');
                                   },
@@ -397,6 +401,44 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                 ),
                                 const Text(
                                   "Assignment",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const AttendanceStudentScreen()));
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: const Icon(
+                                      Icons.assignment_turned_in_sharp,
+                                      color: Colors.white,
+                                      size: 80,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Attendance",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),

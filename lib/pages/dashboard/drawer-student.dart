@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_be/pages/Assignment/Assignment/student_assignment_list.dart';
+import 'package:mobile_be/pages/attendance/attendance-student.dart';
+import 'package:mobile_be/pages/dashboard/dashboard_screen-student.dart';
+import 'package:mobile_be/pages/report/student_grade.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DrawerHomeroomTeacher extends StatelessWidget {
-  DrawerHomeroomTeacher({super.key});
+class DrawerStudent extends StatelessWidget {
+  DrawerStudent({super.key});
   late SharedPreferences _prefs;
 
   Future _removeData() async {
@@ -39,7 +43,8 @@ class DrawerHomeroomTeacher extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/dashboard');
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => DashboardStudent()));
             },
             child: const Card(
               child: Padding(
@@ -53,21 +58,10 @@ class DrawerHomeroomTeacher extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/attendance');
-            },
-            child: const Card(
-              child: Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text(
-                  "Attendance",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/grade');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => GradeStudentReport()));
             },
             child: const Card(
               child: Padding(
@@ -95,13 +89,16 @@ class DrawerHomeroomTeacher extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/report');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => StudentAssignmentList()));
             },
             child: const Card(
               child: Padding(
                 padding: EdgeInsets.all(14.0),
                 child: Text(
-                  "Reports",
+                  "Assignments",
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -109,13 +106,16 @@ class DrawerHomeroomTeacher extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/student-profiles');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AttendanceStudentScreen()));
             },
             child: const Card(
               child: Padding(
                 padding: EdgeInsets.all(14.0),
                 child: Text(
-                  "Student Profiles",
+                  "Attendance",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

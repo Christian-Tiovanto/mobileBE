@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:mobile_be/model/assignment.dart';
+import 'package:mobile_be/pages/view_image-assignment.dart';
 import 'package:mobile_be/services/assignment-service.dart'; // Untuk memilih file
 
 class SubmitAssignment extends StatefulWidget {
@@ -79,6 +80,44 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
               'Due: ${widget.assignment.dueDate}',
               style: const TextStyle(fontSize: 16),
             ),
+            Text(
+              'Attachment :',
+              style: const TextStyle(fontSize: 16),
+            ),
+            widget.assignment.attachedFiles != ''
+                ? ListTile(
+                    title: GestureDetector(
+                      onTap: () async {
+                        print('Opening PDF Viewer');
+                        // Implement the PDF viewer logic here
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ViewFileAssignmentPage(
+                              assignmentId: widget.assignment.assignment_id!,
+                              fileName: widget.assignment.attachedFiles,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        widget.assignment.attachedFiles,
+                        style: TextStyle(
+                            color: Colors
+                                .blue), // Optional: Add color to indicate it's clickable
+                      ),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.download),
+                      onPressed: () async {
+                        print('Downloading the file');
+                        // Implement the download logic here
+                        await AssignmentService()
+                            .getAssignmentAttachment(widget.assignment);
+                      },
+                    ),
+                  )
+                : Text(''),
             const SizedBox(height: 16),
             const Text(
               'Attach your file',

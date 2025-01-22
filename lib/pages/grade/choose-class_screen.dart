@@ -39,7 +39,6 @@ class _ChooseClassPageState extends State<ChooseClassPage> {
                   return Center(
                     child: Column(
                       children: [
-                        Text('Your Homeroom Class'),
                         data['homeroom_class'] != null
                             ? Card(
                                 margin: const EdgeInsets.symmetric(
@@ -67,43 +66,6 @@ class _ChooseClassPageState extends State<ChooseClassPage> {
                                 ),
                               )
                             : Text('You dont Teach any class'),
-                        Text('Class You Teach'),
-                        data['class_id'].length != 0
-                            ? Expanded(
-                                child: ListView.builder(
-                                  itemCount: data['class_id'].length,
-                                  itemBuilder: (context, index) {
-                                    final classroom = data['class_id'][index];
-                                    return Card(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 16),
-                                      elevation: 4,
-                                      child: ListTile(
-                                        contentPadding:
-                                            const EdgeInsets.all(16),
-                                        title: Text(
-                                          classroom.id,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        trailing:
-                                            const Icon(Icons.arrow_forward_ios),
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PickSubjectPage(
-                                                          classId:
-                                                              classroom.id)));
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : Text('you are not a homeroom teacher'),
                       ],
                     ),
                   );

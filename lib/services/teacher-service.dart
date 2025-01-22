@@ -149,8 +149,8 @@ class TeacherService {
     }
   }
 
-  Future updateTeacheTeachNClass(
-      String teacherUid, List<dynamic> classroom, String? subject) async {
+  Future updateTeacheTeachNClass(String teacherUid, List<dynamic> classroom,
+      String? subject, dynamic homeroomClassroom) async {
     final prefs = await SharedPreferences.getInstance();
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/teacher/$teacherUid");
@@ -165,7 +165,8 @@ class TeacherService {
           },
           body: jsonEncode(<String, dynamic>{
             "subject_teach": subject,
-            "class_id": classroom
+            "class_id": classroom,
+            'homeroom_class': homeroomClassroom
           }));
       print('response di teacher update');
       print(response.body);

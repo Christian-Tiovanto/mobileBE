@@ -11,6 +11,8 @@ import 'package:mobile_be/pages/attendance/attendancescreen.dart';
 import 'package:mobile_be/pages/dashboard/drawer-home-teacher.dart';
 import 'package:mobile_be/pages/dashboard/drawer-subj-teacher.dart';
 import 'package:mobile_be/pages/grade/choose-class_screen_subj_teacher-assign.dart';
+import 'package:mobile_be/pages/grade/choose-class_screen_subj_teacher-grade.dart';
+import 'package:mobile_be/pages/grade/grade-subj-teacher.dart';
 import 'package:mobile_be/services/teacher-service.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:mobile_be/widget/ImageStreamWidget.dart';
@@ -287,7 +289,7 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ChooseClassSubjTeacherAssignmentPage()));
+                                                ChooseClassSubjTeacherGradePage()));
                                     // Navigator.pushNamed(
                                     //     context, '/choose-class-grade');
                                   },

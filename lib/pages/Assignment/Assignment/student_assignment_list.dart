@@ -53,8 +53,7 @@ class _StudentAssignmentListState extends State<StudentAssignmentList> {
                 assignments = data;
                 return assignments.isEmpty
                     ? const Center(
-                        child: Text(
-                            'No assignments yet. Tap the + button to add one.'),
+                        child: Text('No assignments yet.'),
                       )
                     : ListView.separated(
                         itemCount: assignments.length,
