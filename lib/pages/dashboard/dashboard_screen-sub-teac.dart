@@ -209,7 +209,7 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
                         children: [
                           Text("Welcome Back"),
                           Text(
-                            'Teachers',
+                            'Subject Teachers',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 26),
                           ),
@@ -367,42 +367,6 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
                       ),
                       Row(
                         children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, '/schedule');
-                                    print('ea');
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/calendar.png',
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Schedule",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
                           Expanded(
                             child: Column(
                               children: [

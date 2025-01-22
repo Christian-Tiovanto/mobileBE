@@ -316,7 +316,11 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                   selectedSubject != null
                       ? selectedSubject!
                       : widget.teacher.subject_teach,
-                  selectedHomeroomClass);
+                  selectedHomeroomClass != null
+                      ? selectedHomeroomClass
+                      : widget.teacher.homeroom_class != null
+                          ? widget.teacher.homeroom_class!.id
+                          : null);
               if (response == true) Navigator.of(context).pop();
             } catch (error) {
               print('error di teaccher profile');

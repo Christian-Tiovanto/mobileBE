@@ -176,9 +176,9 @@ class _DashboardState extends State<Dashboard> {
                         children: [
                           Text("Welcome Back"),
                           Text(
-                            'Teachers',
+                            'Homeroom Teachers',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 26),
+                                fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],
                       ),
@@ -252,6 +252,41 @@ class _DashboardState extends State<Dashboard> {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    Navigator.pushNamed(context, '/report');
+                                  },
+                                  child: Container(
+                                    width: 100,
+                                    height: 100,
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Image.asset(
+                                      'image/report.png',
+                                      width: 50,
+                                      height: 50,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Reports",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -278,40 +313,6 @@ class _DashboardState extends State<Dashboard> {
                                 ),
                                 const Text(
                                   "Attendance",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/choose-class-grade');
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/qualification.png',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Grade",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -408,45 +409,6 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       const SizedBox(
                         height: 20,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, '/report');
-                                  },
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.amber,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Image.asset(
-                                      'image/report.png',
-                                      width: 50,
-                                      height: 50,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Reports",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
                       ),
                       const SizedBox(
                         height: 20,

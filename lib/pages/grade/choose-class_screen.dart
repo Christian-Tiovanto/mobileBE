@@ -65,7 +65,7 @@ class _ChooseClassPageState extends State<ChooseClassPage> {
                                   },
                                 ),
                               )
-                            : Text('You dont Teach any class'),
+                            : Text('You are not a Homeroom Teacher'),
                       ],
                     ),
                   );

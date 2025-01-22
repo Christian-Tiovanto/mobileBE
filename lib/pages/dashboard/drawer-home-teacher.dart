@@ -67,20 +67,6 @@ class DrawerHomeroomTeacher extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, '/grade');
-            },
-            child: const Card(
-              child: Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text(
-                  "Grade",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
               Navigator.pushNamed(context, '/announcements');
             },
             child: const Card(

@@ -95,13 +95,13 @@ class _AttendanceStudentScreenState extends State<AttendanceStudentScreen> {
       case "present":
         title = "You are present";
         break;
-      case "sick":
+      case "sakit":
         title = "You are sick";
         break;
-      case "absent":
+      case "absen":
         title = "You are absent";
         break;
-      case "permission":
+      case "izin":
         title = "You take permission";
         subtitle = reason;
         break;
