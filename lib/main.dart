@@ -28,10 +28,12 @@ import 'package:mobile_be/providers/Locale_provider.dart';
 import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:provider/provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String baseHost = '172.17.0.151';
+const String baseHost = '192.168.18.189';
 const String basePort = '3006';
 Future LoggedInRole() async {
   final prefs = await SharedPreferences.getInstance();
@@ -58,7 +60,20 @@ Future<Locale> savedLanguage() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
-
+  AwesomeNotifications().initialize(
+    'resource://drawable/notif_icon',
+    [
+      NotificationChannel(
+          channelGroupKey: 'basic_channel_group',
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic notifications',
+          channelShowBadge: true,
+          importance: NotificationImportance.Low,
+          defaultColor: const Color.fromARGB(255, 221, 148, 80),
+          ledColor: Colors.white),
+    ],
+  );
   final currentLocale = await savedLanguage();
   final loggedIn = await LoggedInRole();
   print('current locale: $currentLocale');
