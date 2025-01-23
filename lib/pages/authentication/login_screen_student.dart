@@ -131,10 +131,7 @@ class _LoginPageStudentState extends State<LoginPageStudent> {
                                 'student');
 
                             Navigator.pushNamed(context, '/dashboard-student');
-                          } catch (e) {
-                            print('error ini di login screen');
-                            print(e);
-                          }
+                          } catch (e) {}
                         },
                         child: Text(
                           AppLocalizations.of(context)!.login,

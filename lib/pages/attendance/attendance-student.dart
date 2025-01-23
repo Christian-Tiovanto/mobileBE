@@ -14,8 +14,7 @@ class _AttendanceStudentScreenState extends State<AttendanceStudentScreen> {
   // Sample data for days and dates
   Future<dynamic> getAttendanceByStudentId() {
     final results = AttendanceService().getAttendanceByStudentId();
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
@@ -54,8 +53,6 @@ class _AttendanceStudentScreenState extends State<AttendanceStudentScreen> {
                     child: Text('${snapshot.error} has occured'),
                   );
                 } else if (snapshot.hasData) {
-                  print('snapshot.data di AttendanceStudentScreen');
-                  print(snapshot.data);
                   final List<Attendance> data = snapshot.data;
                   return ListView.builder(
                     itemCount: data.length,

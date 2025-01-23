@@ -48,11 +48,9 @@ class _DashboardStudentState extends State<DashboardStudent> {
           setState(() {
             _isBannerAdLoaded = true;
           });
-          print('Banner Ad Loaded');
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          print('Banner Ad Failed to Load: $error');
         },
       ),
     );
@@ -115,13 +113,12 @@ class _DashboardStudentState extends State<DashboardStudent> {
     // Retrieve the stored token
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString('token');
-    print('token di loadjwttoken');
-    print(token);
+
     if (token == null) {
       Navigator.pushReplacementNamed(context, '/login');
       return;
     }
-    print('masih masok sini');
+
     if (token != null) {
       setState(() {
         _jwtToken = token;
@@ -132,16 +129,11 @@ class _DashboardStudentState extends State<DashboardStudent> {
   }
 
   Future _removeData() async {
-    print("kepanggil gak sih");
     _prefs = await SharedPreferences.getInstance();
     bool removed = await _prefs.remove('token');
     if (removed) {
-      print(_prefs.getString('token'));
       setState(() {});
-      print('Data removed successfully!');
-    } else {
-      print('Error removing data.');
-    }
+    } else {}
   }
 
   @override
@@ -254,8 +246,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                   final response = await StudentService()
                                       .updateStudentPhoto(
                                           _jwtPayload!['id'], _selectedImage!);
-                                  print("response di update image berhasi");
-                                  print(response);
+
                                   Navigator.pop(context, 'OK');
                                   setState(() {});
                                 },
@@ -314,7 +305,7 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                   height: 10,
                                 ),
                                 const Text(
-                                  "Grade",
+                                  "Report",
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -389,10 +380,11 @@ class _DashboardStudentState extends State<DashboardStudent> {
                                         color: Colors.amber,
                                         borderRadius:
                                             BorderRadius.circular(20)),
-                                    child: Icon(
-                                      Icons.assignment_turned_in_sharp,
+                                    child: const Image(
+                                      image: AssetImage('image/assignment.png'),
+                                      width: 50,
+                                      height: 50,
                                       color: Colors.white,
-                                      size: 80,
                                     ),
                                   ),
                                 ),

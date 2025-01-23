@@ -21,10 +21,8 @@ class GradeSubjTeacherScreen extends StatefulWidget {
 class _GradeSubjTeacherScreenState extends State<GradeSubjTeacherScreen> {
   Future<dynamic> getStudentGrade(
       String userId, String subject, String classroom) {
-    print('results di grade widget');
-    print(subject);
     final results = GradeService().getStudentGrade(userId, subject, classroom);
-    print(results);
+
     return results;
   }
 
@@ -88,9 +86,8 @@ class _GradeSubjTeacherScreenState extends State<GradeSubjTeacherScreen> {
                     child: Text('${snapshot.error} has occured'),
                   );
                 } else if (snapshot.hasData) {
-                  print('data di studentgrade');
                   final grade = snapshot.data as Grade;
-                  print(grade);
+
                   return Align(
                     alignment: Alignment.topCenter,
                     child: Padding(

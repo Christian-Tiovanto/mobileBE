@@ -9,23 +9,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentService {
   Future getStudentByClassId(String classId) async {
-    print('classId di student service');
-    print(classId);
     final url = Uri.parse(
         "http://$baseHost:$basePort/api/v1/student/class/$classId/all");
     try {
-      print('ini di student service getstudentbyclassid');
       final response = await http.get(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(response.statusCode);
-      print(jsonDecode(response.body));
+
       final data = jsonDecode(response.body)['data'];
-      print('data di studentservice');
-      print(data);
+
       if (response.statusCode == 200) {
         return List<Student>.from(
             data.map((student) => Student.fromJson(student)));
@@ -33,38 +28,28 @@ class StudentService {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr');
-      print(e);
       throw Exception(e.toString());
     }
   }
 
   Future getStudentByUserId(String userId) async {
-    print('userId di student service');
-    print(userId);
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/student/$userId");
     try {
-      print('ini di student service getstudentbyclassid');
       final response = await http.get(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('response.statusCode');
-      print(response.statusCode);
-      print(jsonDecode(response.body));
+
       final data = jsonDecode(response.body)['data'];
-      print('data di studentservice');
-      print(data);
+
       if (response.statusCode == 200) {
         return Student.fromJson(data);
       } else {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr');
-      print(e);
       throw Exception(e.toString());
     }
   }
@@ -74,16 +59,13 @@ class StudentService {
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/student/all/student");
     try {
-      print('ini di teacher service');
       final response = await http.get(
         url,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('jsonDecode(response.body) di getClass');
-      print(response.statusCode);
-      print(jsonDecode(response.body));
+
       final data = jsonDecode(response.body)['data'];
       if (response.statusCode == 200) {
         return List<Student>.from(
@@ -92,8 +74,6 @@ class StudentService {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr di getallStudent');
-      print(e);
       throw Exception(e.toString());
     }
   }
@@ -103,25 +83,18 @@ class StudentService {
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/student/$studentUid");
     try {
-      print('ini di teacher service');
-      print(url);
-      print(classroom);
       final response = await http.patch(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, dynamic>{"class_id": classroom}));
-      print('response di teacher update');
-      print(response.body);
-      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return true;
       } else {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr');
-      print(e);
       throw Exception(e.toString());
     }
   }
@@ -130,9 +103,6 @@ class StudentService {
       String teacherId, String phoneNumber) async {
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/student/signup");
     try {
-      print('ini di student service register');
-      print(url);
-      print(phoneNumber);
       final response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -145,17 +115,13 @@ class StudentService {
             "phone_number": "$phoneNumber",
             "tahun_ajaran": '2023'
           }));
-      print('response di teacher register');
-      print(response.body);
-      print(response.statusCode);
+
       if (response.statusCode == 200) {
         return true;
       } else {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr di register student');
-      print(e);
       throw Exception(e.toString());
     }
   }
@@ -164,9 +130,6 @@ class StudentService {
     final prefs = await SharedPreferences.getInstance();
     final url = Uri.parse("http://$baseHost:$basePort/api/v1/student/login");
     try {
-      print('ini di teacher service login');
-      print(email);
-      print(password);
       final response = await http.post(url,
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
@@ -177,19 +140,15 @@ class StudentService {
             "password": password,
             'for_type': for_type
           }));
-      print(response.statusCode);
-      print(response.body);
+
       if (response.statusCode == 200) {
-        print("prefs.setstring di login service");
         await prefs.setString("token", jsonDecode(response.body)['token']);
-        print("eaaaa");
+
         return true;
       } else {
         throw jsonDecode(response.body)['message'];
       }
     } catch (e) {
-      print('errorrrr');
-      print(e);
       throw Exception(e.toString());
     }
   }
@@ -198,12 +157,9 @@ class StudentService {
     final url =
         Uri.parse("http://$baseHost:$basePort/api/v1/student/$studentId/photo");
     try {
-      print('ini di teacher service register');
-      print(url);
-      print(image.path);
       final request = await http.MultipartRequest('PATCH', url);
       final pic = await http.MultipartFile.fromPath('photo', image.path);
-      print('response di teacher register');
+
       request.files.add(pic);
       final response = await request.send();
       if (response.statusCode == 200) {
@@ -212,8 +168,6 @@ class StudentService {
         throw Exception('error update image');
       }
     } catch (e) {
-      print('errorrrr di update teacher photo');
-      print(e);
       throw Exception(e.toString());
     }
   }

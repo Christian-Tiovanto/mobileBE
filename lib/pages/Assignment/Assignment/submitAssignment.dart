@@ -30,7 +30,7 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
   }
 
   void _submitAssignment() async {
-    print('Submit button pressed'); // Debug log
+    // Debug log
 
     if (selectedFilePath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -42,8 +42,8 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
     }
 
     // Create the submission
-    print('Creating submission'); // Debug log
-    print(selectedFilePath);
+    // Debug log
+
     await AssignmentService()
         .submitSubmission(widget.assignment.assignment_id!, selectedFilePath);
     // Add the submission to the assignment's submissions list
@@ -88,7 +88,6 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
                 ? ListTile(
                     title: GestureDetector(
                       onTap: () async {
-                        print('Opening PDF Viewer');
                         // Implement the PDF viewer logic here
                         Navigator.push(
                           context,
@@ -110,7 +109,6 @@ class _SubmitAssignmentState extends State<SubmitAssignment> {
                     trailing: IconButton(
                       icon: Icon(Icons.download),
                       onPressed: () async {
-                        print('Downloading the file');
                         // Implement the download logic here
                         await AssignmentService()
                             .getAssignmentAttachment(widget.assignment);

@@ -14,8 +14,7 @@ class GradeDetailPage extends StatefulWidget {
 class _GradeDetailPageState extends State<GradeDetailPage> {
   Future<dynamic> getAllGradeTeacherTeach() {
     final results = GradeService().getAllGradeByClassNPopulate(widget.classId);
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
@@ -31,7 +30,7 @@ class _GradeDetailPageState extends State<GradeDetailPage> {
       appBar: AppBar(
         backgroundColor: Colors.orange, // Set AppBar color to orange
         title: Text(
-          'tes',
+          'Grade',
           style: TextStyle(color: Colors.white),
         ),
       ),
@@ -67,8 +66,6 @@ class _GradeDetailPageState extends State<GradeDetailPage> {
                         child: Text('${snapshot.error} has occured'),
                       );
                     } else if (snapshot.hasData) {
-                      print('snapshot.data di gradeDetailPage');
-                      print(snapshot.data);
                       students = snapshot.data;
                       return Expanded(
                         child: ListView.builder(

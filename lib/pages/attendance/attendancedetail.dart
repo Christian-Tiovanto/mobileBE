@@ -34,29 +34,21 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
     _jwtPayload = decodeJwtPayload(token);
     final Teacher teacher =
         await TeacherService().getTeacherById(_jwtPayload!['id']);
-    print('teacher');
-    print('teacher.homeroom_class');
-    print(teacher.homeroom_class!.id);
+
     final results =
         await StudentService().getStudentByClassId(teacher.homeroom_class!.id);
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
   List<Student> _students = [];
 
   Future _removeData() async {
-    print("kepanggil gak sih");
     _prefs = await SharedPreferences.getInstance();
     bool removed = await _prefs.remove('token');
     if (removed) {
-      print(_prefs.getString('token'));
       setState(() {});
-      print('Data removed successfully!');
-    } else {
-      print('Error removing data.');
-    }
+    } else {}
   }
 
   int _getCount(String status) {
@@ -143,7 +135,6 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
             InkWell(
               onTap: () {
                 Navigator.pushNamed(context, '/schedule');
-                print('to be implemented');
               },
               child: const Card(
                 child: Padding(
@@ -156,9 +147,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
               ),
             ),
             InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
+              onTap: () {},
               child: const Card(
                 child: Padding(
                   padding: EdgeInsets.all(14.0),
@@ -451,7 +440,6 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
                   .createBulkAttendance(createBulkAttendanceDto);
               Navigator.pushReplacementNamed(context, '/attendance');
             } catch (error) {
-              print(error);
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(error.toString())));
             }

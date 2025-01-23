@@ -4,7 +4,6 @@ import 'package:mobile_be/providers/Locale_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Settings extends StatefulWidget {
   const Settings({super.key});
 
@@ -22,7 +21,7 @@ class _SettingsState extends State<Settings> {
     _loadLanguagePreference();
   }
 
-   Future<void> _saveLanguagePreference(String language) async {
+  Future<void> _saveLanguagePreference(String language) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('selectedLanguage', language);
 
@@ -84,7 +83,6 @@ class _SettingsState extends State<Settings> {
                   });
                   _changeLanguage(newValue!);
                   _saveLanguagePreference(newValue);
-                  print('Selected Language: $_selectedLanguage');
                 },
                 items: _languages.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(

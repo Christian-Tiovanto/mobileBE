@@ -19,19 +19,19 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
   // API calls
   Future<List<Subject>> getAllSubject() async {
     final results = await GradeService().getAllSubject();
-    print('Results from GradeService.getAllSubject: $results');
+
     return results; // Assuming this returns a list of subjects as strings
   }
 
   Future<List<Classroom>> getAllClassroom() async {
     final response = await ClassroomService().getAllClassroom();
-    print('Results from ClassroomService.getAllClassroom: $response');
+
     return response; // Assuming this returns a list of Classroom objects
   }
 
   Future<List<Teacher>> getAllTeacher() async {
     final results = await TeacherService().getAllTeacher();
-    print('Results from TeacherService.getAllTeacher: $results');
+
     return results; // Assuming this returns a list of Teacher objects
   }
 
@@ -114,9 +114,6 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
               ElevatedButton(
                   onPressed: () async {
                     try {
-                      print('selectedClassroom');
-                      print(selectedClassroom);
-                      print(selectedTeacher);
                       await GradeService().createEmptyGradeBulk(
                           '$selectedClassroom', '${selectedTeacher}');
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -125,7 +122,6 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
                             label: 'Undo',
                             onPressed: () {
                               // Code to execute when 'Undo' is pressed
-                              print('Undo action');
                             },
                           ),
                           content: Text('success')));
@@ -136,7 +132,6 @@ class _GradeAdminPageState extends State<GradeAdminPage> {
                             label: 'Undo',
                             onPressed: () {
                               // Code to execute when 'Undo' is pressed
-                              print('Undo action');
                             },
                           ),
                           content: Text('$error')));

@@ -19,8 +19,6 @@ class _LoginPageTeacherState extends State<LoginPageTeacher> {
 
   @override
   Widget build(BuildContext context) {
-    print('widget.dashboardRoute');
-    print(widget.dashboardRoute);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -142,8 +140,6 @@ class _LoginPageTeacherState extends State<LoginPageTeacher> {
                             } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(content: Text(e.toString())));
-                              print('error ini di login screen');
-                              print(e);
                             }
                           }
                         },

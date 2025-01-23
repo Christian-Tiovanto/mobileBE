@@ -23,16 +23,14 @@ class _TeacherProfileState extends State<TeacherProfile> {
   late List<Classroom> availableClasses = [];
   void getAllClassroom() async {
     final response = await ClassroomService().getAllClassroom();
-    print("di getAllClassroom");
+
     setState(() {
       availableClasses = response;
     });
-    print(response);
   }
 
   @override
   void initState() {
-    print("availableClasses['science']");
     super.initState();
     if (widget.teacher.classroom != null) {
       classes = List<Classroom>.from(widget.teacher.classroom!);
@@ -68,7 +66,6 @@ class _TeacherProfileState extends State<TeacherProfile> {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              print('Edit button pressed');
               _showEditDialog(widget.teacher);
             },
             tooltip: 'Edit Classes',
@@ -161,33 +158,29 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
   // Fetch classrooms data
   void getAllClassroom() async {
     final response = await ClassroomService().getAllClassroom();
-    print("Fetched classrooms");
+
     setState(() {
       availableClasses = response; // Assign fetched data to availableClasses
     });
-    print(response);
   }
 
   // Fetch subjects, called after getAllClassroom
   Future<List<Subject>> getAllSubject() async {
     final results = await GradeService().getAllSubject();
-    print('Results from getAllSubject');
-    print(results);
+
     return results;
   }
 
   @override
   void initState() {
     super.initState();
-    print('ini di initsatate');
+
     getAllClassroom(); // Initial classroom fetch
     classes = List<Classroom>.from(widget.initialClasses);
   }
 
   @override
   Widget build(BuildContext context) {
-    print('availableClasses di buildcontext');
-    print(availableClasses);
     return AlertDialog(
       title: const Text('Edit Classes'),
       content: Column(
@@ -286,10 +279,7 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                         classes.remove(classr);
                       });
                     }
-                  } catch (err) {
-                    print('err di delete class');
-                    print(err);
-                  }
+                  } catch (err) {}
                 },
               ),
             );
@@ -304,9 +294,6 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
         ElevatedButton(
           onPressed: () async {
             try {
-              print("ini di button editclass");
-              print(selectedSubject);
-              print(selectedClassCode);
               final response = await TeacherService().updateTeacheTeachNClass(
                   widget.teacher.id,
                   [
@@ -322,10 +309,7 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                           ? widget.teacher.homeroom_class!.id
                           : null);
               if (response == true) Navigator.of(context).pop();
-            } catch (error) {
-              print('error di teaccher profile');
-              print(error);
-            }
+            } catch (error) {}
           },
           child: const Text('Edit Class And Subject'),
         ),

@@ -79,7 +79,6 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                           label: 'Undo',
                           onPressed: () {
                             // Code to execute when 'Undo' is pressed
-                            print('Undo action');
                           },
                         ),
                         content: Text('phone num must be 12 character')));
@@ -97,15 +96,12 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
                     Navigator.of(context).pop();
                   }
                 } catch (error) {
-                  print('error di addteacher');
-                  print(error);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 2),
                       action: SnackBarAction(
                         label: 'Undo',
                         onPressed: () {
                           // Code to execute when 'Undo' is pressed
-                          print('Undo action');
                         },
                       ),
                       content: Text('$error')));
@@ -149,9 +145,9 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
   //   );
   // }
 
-  Future<dynamic> getAllTeacher() {
-    final results = TeacherService().getAllTeacher();
-    print('results di grade');
+  Future<dynamic> getAllTeacher() async {
+    final results = await TeacherService().getAllTeacher();
+    print('results');
     print(results);
     return results;
   }
@@ -195,15 +191,15 @@ class _TeacherScreenHttpState extends State<TeacherScreenHttp> {
           FutureBuilder(
               future: getAllTeacher(),
               builder: (context, snapshot) {
+                print(snapshot.connectionState);
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
                     return Center(
                       child: Text('${snapshot.error} has occured'),
                     );
                   } else if (snapshot.hasData) {
-                    print('data di studentgrade');
                     final data = snapshot.data as List<Teacher>;
-                    print(data);
+
                     return Expanded(
                       child: data.isEmpty
                           ? Center(child: Text('No Teachers found for .'))

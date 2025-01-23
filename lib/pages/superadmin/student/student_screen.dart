@@ -79,7 +79,6 @@ class _StudentScreenState extends State<StudentScreen> {
                           label: 'Undo',
                           onPressed: () {
                             // Code to execute when 'Undo' is pressed
-                            print('Undo action');
                           },
                         ),
                         content: Text('phone num must be 12 character')));
@@ -96,15 +95,12 @@ class _StudentScreenState extends State<StudentScreen> {
                     return Navigator.of(context).pop();
                   }
                 } catch (error) {
-                  print('error di addStudent');
-                  print(error);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       duration: Duration(seconds: 2),
                       action: SnackBarAction(
                         label: 'Undo',
                         onPressed: () {
                           // Code to execute when 'Undo' is pressed
-                          print('Undo action');
                         },
                       ),
                       content: Text('$error')));
@@ -149,8 +145,7 @@ class _StudentScreenState extends State<StudentScreen> {
 
   Future<dynamic> getAllStudent() {
     final results = StudentService().getAllStudent();
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
@@ -199,9 +194,8 @@ class _StudentScreenState extends State<StudentScreen> {
                       child: Text('${snapshot.error} has occured'),
                     );
                   } else if (snapshot.hasData) {
-                    print('data di studentgrade');
                     final data = snapshot.data as List<Student>;
-                    print(data);
+
                     return Expanded(
                       child: data.isEmpty
                           ? Center(child: Text('No students found for .'))

@@ -13,7 +13,6 @@ class DatabaseHelper {
   DatabaseHelper._internal();
 
   Future<Database> get database async {
-    print('eaaaa');
     if (_database != null) return _database!;
     _database = await _initDatabase();
     return _database!;
@@ -34,23 +33,20 @@ class DatabaseHelper {
 
   Future<void> insertAnnouncement(Announcement announcement) async {
     final db = await database;
-    print('announcement.toMap() di insertAnnouncement');
-    print(announcement.toMap());
+
     try {
       await db.insert(
         'announcements',
         announcement.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-    } catch (e) {
-      print('Error inserting announcement: $e');
-    }
+    } catch (e) {}
   }
 
   Future<List<Announcement>> getAnnouncements() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('announcements');
-    print(maps);
+
     return List.generate(maps.length, (i) {
       return Announcement.fromMap(maps[i]);
     });
@@ -65,9 +61,7 @@ class DatabaseHelper {
         where: 'id = ?',
         whereArgs: [announcement.id],
       );
-    } catch (e) {
-      print('Error updating announcement: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> deleteAnnouncement(int id) async {
@@ -78,9 +72,7 @@ class DatabaseHelper {
         where: 'id = ?',
         whereArgs: [id],
       );
-    } catch (e) {
-      print('Error deleting announcement: $e');
-    }
+    } catch (e) {}
   }
 
   Future<void> deleteAllAnnouncements() async {
@@ -88,9 +80,6 @@ class DatabaseHelper {
 
     try {
       await db.delete('announcements'); // Deletes all rows in the table
-      print('All announcements deleted');
-    } catch (e) {
-      print('Error deleting announcements: $e');
-    }
+    } catch (e) {}
   }
 }

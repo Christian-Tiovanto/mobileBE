@@ -15,7 +15,6 @@ class Attendance {
       required this.tahun_ajaran});
 
   factory Attendance.fromJson(Map<String, dynamic> value) {
-    print('ini di Attendance');
     return Attendance(
         user_id: value['user_id'],
         status: value['status'],

@@ -10,15 +10,10 @@ class DrawerStudent extends StatelessWidget {
   late SharedPreferences _prefs;
 
   Future _removeData() async {
-    print("kepanggil gak sih");
     _prefs = await SharedPreferences.getInstance();
     bool removed = await _prefs.remove('token');
     if (removed) {
-      print(_prefs.getString('token'));
-      print('Data removed successfully!');
-    } else {
-      print('Error removing data.');
-    }
+    } else {}
   }
 
   @override

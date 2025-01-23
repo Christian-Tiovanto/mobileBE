@@ -20,13 +20,9 @@ class AssignmentDetail extends StatefulWidget {
 class _AssignmentDetailState extends State<AssignmentDetail> {
   final DateFormat formatter = DateFormat('MM/dd/yyyy HH:mm');
   void _updateScore(Submission submission, int score) async {
-    print('_updateScore');
     try {
       await AssignmentService().updateSubmissionScore(submission, score);
-    } catch (error) {
-      print('error di _updateScore');
-      print(error);
-    }
+    } catch (error) {}
 
     setState(() {
       submission.score = score;
@@ -36,14 +32,12 @@ class _AssignmentDetailState extends State<AssignmentDetail> {
   Future<List<Submission>> getAllSubmissionByAssignmentId(String assignmentId) {
     final results =
         AssignmentService().getAllSubmissionByAssignmentId(assignmentId);
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
   void _downloadFile(String url) {
     // Implement file download logic here
-    print('Downloading file from $url');
   }
 
   // Fungsi untuk menavigasi ke halaman submit assignment
@@ -179,7 +173,6 @@ class _AssignmentDetailState extends State<AssignmentDetail> {
                 ? ListTile(
                     title: GestureDetector(
                       onTap: () async {
-                        print('Opening PDF Viewer');
                         // Implement the PDF viewer logic here
                         Navigator.push(
                           context,
@@ -201,7 +194,6 @@ class _AssignmentDetailState extends State<AssignmentDetail> {
                     trailing: IconButton(
                       icon: Icon(Icons.download),
                       onPressed: () async {
-                        print('Downloading the file');
                         // Implement the download logic here
                         await AssignmentService()
                             .getAssignmentAttachment(widget.assignment);
@@ -256,8 +248,6 @@ void _showSubmissionDetail(BuildContext context, Submission submission) {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
-                print('submission di viewFile');
-                print(submission.filePath);
                 if (submission.filePath == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Doesnt have file')),

@@ -45,11 +45,9 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
           setState(() {
             _isBannerAdLoaded = true;
           });
-          print('Banner Ad Loaded');
         },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          print('Banner Ad Failed to Load: $error');
         },
       ),
     );
@@ -112,13 +110,12 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
     // Retrieve the stored token
     final _prefs = await SharedPreferences.getInstance();
     String? token = _prefs.getString('token');
-    print('token di loadjwttoken');
-    print(token);
+
     if (token == null) {
       Navigator.pushReplacementNamed(context, '/login');
       return;
     }
-    print('masih masok sini');
+
     if (token != null) {
       setState(() {
         _jwtToken = token;
@@ -129,16 +126,11 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
   }
 
   Future _removeData() async {
-    print("kepanggil gak sih");
     _prefs = await SharedPreferences.getInstance();
     bool removed = await _prefs.remove('token');
     if (removed) {
-      print(_prefs.getString('token'));
       setState(() {});
-      print('Data removed successfully!');
-    } else {
-      print('Error removing data.');
-    }
+    } else {}
   }
 
   @override
@@ -251,8 +243,7 @@ class _DashboardSubjTeacherState extends State<DashboardSubjTeacher> {
                                   final response = await TeacherService()
                                       .updateTeacherPhoto(
                                           _jwtPayload!['id'], _selectedImage!);
-                                  print("response di update image berhasi");
-                                  print(response);
+
                                   Navigator.pop(context, 'OK');
                                   setState(() {});
                                 },

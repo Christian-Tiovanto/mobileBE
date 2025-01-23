@@ -25,8 +25,7 @@ class PickSubjectStatePage extends State<PickSubjectPage> {
   List<Subject> SubjectList = [];
   Future<dynamic> getAllSubject() {
     final results = GradeService().getAllSubject();
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
@@ -53,8 +52,7 @@ class PickSubjectStatePage extends State<PickSubjectPage> {
                   );
                 } else if (snapshot.hasData) {
                   final data = snapshot.data as List<dynamic>;
-                  print('data di picksubject');
-                  print(data);
+
                   return ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {

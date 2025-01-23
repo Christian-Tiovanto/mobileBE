@@ -17,8 +17,6 @@ class Teacher {
       this.homeroom_class});
 
   factory Teacher.fromJson(Map<String, dynamic> value) {
-    print('value di teacher');
-    print(value);
     return Teacher(
         id: value['_id'],
         name: value['name'],

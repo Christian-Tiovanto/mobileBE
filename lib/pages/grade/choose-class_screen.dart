@@ -12,8 +12,7 @@ class ChooseClassPage extends StatefulWidget {
 class _ChooseClassPageState extends State<ChooseClassPage> {
   Future<dynamic> getAllTeacherClass() {
     final results = TeacherService().getClass();
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
@@ -34,8 +33,7 @@ class _ChooseClassPageState extends State<ChooseClassPage> {
                   );
                 } else if (snapshot.hasData) {
                   final data = snapshot.data as Map<String, dynamic>;
-                  print("data['class_id']");
-                  print(data['class_id']);
+
                   return Center(
                     child: Column(
                       children: [

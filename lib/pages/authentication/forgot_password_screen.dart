@@ -88,9 +88,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
-                        onPressed: () {
-                          print('ea');
-                        },
+                        onPressed: () {},
                         child: const Text(
                           'Get OTP',
                           style: TextStyle(color: Colors.white),

@@ -16,14 +16,11 @@ class _AssignmentListState extends State<AssignmentList> {
   List<Assignment> assignments = [];
   Future<List<Assignment>> getAllAssignmentByClassId(String classId) {
     final results = AssignmentService().getAllAssignmentByClassId(classId);
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
   void _navigateToAddAssignment() async {
-    print('widget.classroomId');
-    print(widget.classroomId);
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
@@ -65,9 +62,7 @@ class _AssignmentListState extends State<AssignmentList> {
                 );
               } else if (snapshot.hasData) {
                 final data = snapshot.data as List<Assignment>;
-                print('data assignment');
-                print(data);
-                print(data.isEmpty);
+
                 assignments = data;
                 return assignments.isEmpty
                     ? const Center(
@@ -79,8 +74,7 @@ class _AssignmentListState extends State<AssignmentList> {
                         separatorBuilder: (context, index) => const Divider(),
                         itemBuilder: (context, index) {
                           final assignment = assignments[index];
-                          print('assignment ini bawah');
-                          print(assignment);
+
                           return ListTile(
                             title: Text(
                               assignment.title,

@@ -51,10 +51,7 @@ class _SubjectScreenState extends State<SubjectScreen> {
                       setState(() {});
                     }
                   }
-                } catch (error) {
-                  print('error di create class');
-                  print(error);
-                }
+                } catch (error) {}
               },
               child: const Text('Add Class'),
             ),
@@ -122,9 +119,8 @@ class _SubjectScreenState extends State<SubjectScreen> {
                   child: Text('${snapshot.error} has occured'),
                 );
               } else if (snapshot.hasData) {
-                print('data di studentgrade');
                 final classroom = snapshot.data as List<Subject>;
-                print(classroom);
+
                 return ListView.builder(
                   itemCount: classroom.length,
                   itemBuilder: (context, index) {

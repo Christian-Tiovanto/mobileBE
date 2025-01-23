@@ -41,7 +41,7 @@ class _AnnouncementSuperAdminScreenState
     _refreshAnnouncements();
   }
 
-  void showNotification(String title, String body){
+  void showNotification(String title, String body) {
     AwesomeNotifications().createNotification(
       content: NotificationContent(
         id: 10,
@@ -51,7 +51,6 @@ class _AnnouncementSuperAdminScreenState
       ),
     );
   }
-
 
   Future<void> _showAnnouncementDialog([Announcement? announcement]) async {
     final titleController = TextEditingController(text: announcement?.title);
@@ -140,15 +139,16 @@ class _AnnouncementSuperAdminScreenState
 
                 final String announcement_mongo_id = await AnnouncementService()
                     .createAnnouncement(newAnnouncement, selectedImage!.path);
-                print('announcement_mongo_id');
-                print(announcement_mongo_id);
+
                 newAnnouncement.announcement_mongo_id = announcement_mongo_id;
                 if (announcement == null) {
                   await DatabaseHelper().insertAnnouncement(newAnnouncement);
-                  _notify.createBasicNotification("New Announcement", "New Announcement has been added");
+                  _notify.createBasicNotification(
+                      "New Announcement", "New Announcement has been added");
                 } else {
                   await DatabaseHelper().updateAnnouncement(newAnnouncement);
-                  _notify.createBasicNotification("Announcement Updated", "Announcement has been updated");
+                  _notify.createBasicNotification(
+                      "Announcement Updated", "Announcement has been updated");
                 }
 
                 _refreshAnnouncements();

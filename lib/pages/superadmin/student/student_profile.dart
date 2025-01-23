@@ -24,16 +24,14 @@ class _StudentProfileState extends State<StudentProfile> {
   late List<Classroom> availableClasses = [];
   void getAllClassroom() async {
     final response = await ClassroomService().getAllClassroom();
-    print("di getAllClassroom");
+
     setState(() {
       availableClasses = response;
     });
-    print(response);
   }
 
   @override
   void initState() {
-    print("availableClasses['science']");
     super.initState();
     // if (widget.student.classroom != null) {
     //   classes = List<Classroom>.from(widget.student.classroom!);
@@ -61,8 +59,6 @@ class _StudentProfileState extends State<StudentProfile> {
 
   @override
   Widget build(BuildContext context) {
-    print('widget.student.class_id.id');
-    print(widget.student.class_id.id);
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.student.name, style: const TextStyle(fontSize: 24)),
@@ -71,7 +67,6 @@ class _StudentProfileState extends State<StudentProfile> {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              print('Edit button pressed');
               _showEditDialog(widget.student);
             },
             tooltip: 'Edit Classes',
@@ -155,22 +150,19 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
   // Fetch subjects, called after getAllClassroom
   Future<List<Classroom>> getAllClassroom() async {
     final results = await ClassroomService().getAllClassroom();
-    print('Results from getAllSubject');
-    print(results);
+
     return results;
   }
 
   @override
   void initState() {
     super.initState();
-    print('ini di initsatate');
+
     classes = widget.initialClasses;
   }
 
   @override
   Widget build(BuildContext context) {
-    print('availableClasses di buildcontext');
-    print(availableClasses);
     return AlertDialog(
       title: const Text('Edit Classes'),
       content: Column(
@@ -218,8 +210,6 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
         ElevatedButton(
           onPressed: () async {
             try {
-              print("ini di button editclass");
-              print(selectedCLass);
               if (selectedCLass == null) {
                 return;
               }
@@ -227,13 +217,10 @@ class _EditClassesDialogState extends State<EditClassesDialog> {
                   .updateStudentClassById(widget.student.id, selectedCLass!);
               await GradeService()
                   .createEmptyGrade(selectedCLass!, widget.student.id);
-              print(response);
+
               if (response == true) Navigator.of(context).pop();
               setState(() {});
-            } catch (error) {
-              print('error di teaccher profile');
-              print(error);
-            }
+            } catch (error) {}
           },
           child: const Text('Edit Class'),
         ),

@@ -16,8 +16,7 @@ class _StudentAssignmentListState extends State<StudentAssignmentList> {
   List<Assignment> assignments = [];
   Future<List<Assignment>> getAllAssignmentByClassId() {
     final results = AssignmentService().getAllStudentAssignment();
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
@@ -47,9 +46,7 @@ class _StudentAssignmentListState extends State<StudentAssignmentList> {
                 );
               } else if (snapshot.hasData) {
                 final data = snapshot.data as List<Assignment>;
-                print('data assignment');
-                print(data);
-                print(data.isEmpty);
+
                 assignments = data;
                 return assignments.isEmpty
                     ? const Center(
@@ -60,8 +57,7 @@ class _StudentAssignmentListState extends State<StudentAssignmentList> {
                         separatorBuilder: (context, index) => const Divider(),
                         itemBuilder: (context, index) {
                           final assignment = assignments[index];
-                          print('assignment ini bawah');
-                          print(assignment);
+
                           return ListTile(
                             title: Text(
                               assignment.title,

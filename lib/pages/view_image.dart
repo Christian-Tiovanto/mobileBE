@@ -41,13 +41,11 @@ class _ViewFilePageState extends State<ViewFilePage> {
       // You can attempt to get the mime type from the headers or rely on the response data
       final mimeType =
           lookupMimeType(response.headers['content-type']!, headerBytes: bytes);
-      print('File MIME type: $mimeType');
-      print(response.headers);
+
       // Save the file locally
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/$fileName');
-      print('file.path');
-      print(file.path);
+
       await file.writeAsBytes(bytes, flush: true);
 
       setState(() {

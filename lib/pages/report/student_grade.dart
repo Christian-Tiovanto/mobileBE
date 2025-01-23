@@ -15,15 +15,13 @@ class GradeStudentReport extends StatefulWidget {
 class _GradeStudentReportState extends State<GradeStudentReport> {
   Future<dynamic> getStudentNItsGrade() async {
     final results = await GradeService().getStudentNItsGradeLoggedIn();
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
   Future<dynamic> getAttendanceCount(String status) async {
     final results = await AttendanceService().getAttendanceCountStudent(status);
-    print('results di gradeStudentReport');
-    print(results);
+
     return results;
   }
 

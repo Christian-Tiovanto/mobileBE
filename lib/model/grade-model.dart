@@ -16,7 +16,6 @@ class Grade {
       required this.subject});
 
   factory Grade.fromJson(Map<String, dynamic> value) {
-    print('id di classroom');
     return Grade(
         id: value['_id'],
         assignment_score: value['assignment_score'],

@@ -103,9 +103,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               ),
             ),
             InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
+              onTap: () {},
               child: const Card(
                 child: Padding(
                   padding: EdgeInsets.all(14.0),
@@ -117,9 +115,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               ),
             ),
             InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
+              onTap: () {},
               child: const Card(
                 child: Padding(
                   padding: EdgeInsets.all(14.0),

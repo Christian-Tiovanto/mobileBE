@@ -45,8 +45,6 @@ class Submission {
     this.comment, // Nullable comment
   });
   factory Submission.fromJson(Map<String, dynamic> value) {
-    print('value di submission.fromJson');
-    print(value);
     return Submission(
       submission_id: value['_id'],
       submissionTime: '',

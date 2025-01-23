@@ -18,8 +18,6 @@ class AnnouncementDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('file_url');
-    print(file_url);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 231, 125, 11),

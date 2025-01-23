@@ -13,8 +13,7 @@ class ProfileDetail extends StatefulWidget {
 class _ProfileDetailState extends State<ProfileDetail> {
   Future<dynamic> getStudentByUserId(String userId) {
     final results = StudentService().getStudentByUserId(userId);
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
@@ -96,9 +95,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
               ),
             ),
             InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
+              onTap: () {},
               child: const Card(
                 child: Padding(
                   padding: EdgeInsets.all(14.0),
@@ -110,9 +107,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
               ),
             ),
             InkWell(
-              onTap: () {
-                print('to be implemented');
-              },
+              onTap: () {},
               child: const Card(
                 child: Padding(
                   padding: EdgeInsets.all(14.0),

@@ -17,16 +17,14 @@ class _StudentGradeState extends State<StudentGrade> {
 
   Future<dynamic> getAllStudentByClassId() {
     final results = StudentService().getStudentByClassId('6A');
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
   @override
   Widget build(BuildContext context) {
     final String lessonName = widget.lessonName;
-    print('lessonName di studentgrade');
-    print(lessonName);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('$lessonName Grades'),
@@ -50,10 +48,7 @@ class _StudentGradeState extends State<StudentGrade> {
                       child: Text('${snapshot.error} has occured'),
                     );
                   } else if (snapshot.hasData) {
-                    print('data di studentgrade');
                     final data = snapshot.data as List<Student>;
-                    print(data);
-                    print(lessonName);
 
                     return Expanded(
                       child: data.isEmpty

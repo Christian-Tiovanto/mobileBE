@@ -29,10 +29,9 @@ import 'package:mobile_be/utils/decode-jwt.dart';
 import 'package:provider/provider.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String baseHost = '172.17.0.151';
+const String baseHost = '192.168.171.62';
 const String basePort = '3006';
 Future LoggedInRole() async {
   final prefs = await SharedPreferences.getInstance();
@@ -40,11 +39,8 @@ Future LoggedInRole() async {
   Map<String, dynamic> _jwtPayload = {"for_type": 'login'};
   if (token != null) {
     _jwtPayload = decodeJwtPayload(token);
-    print('_jwtPayload di main');
-    print(_jwtPayload);
   }
-  print('_jwtPayload di luar main');
-  print(_jwtPayload);
+
   return _jwtPayload['for_type'] != null ? _jwtPayload['for_type'] : '';
 }
 
@@ -75,7 +71,7 @@ void main() async {
   );
   final currentLocale = await savedLanguage();
   final loggedIn = await LoggedInRole();
-  print('current locale: $currentLocale');
+
   runApp(MainApp(
     isLoggedIn: loggedIn,
     initLocale: currentLocale,

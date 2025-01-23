@@ -14,8 +14,6 @@ class Student {
       this.phone_number});
 
   factory Student.fromJson(Map<String, dynamic> value) {
-    print('value di student');
-    print(value);
     return Student(
         id: value['_id'],
         name: value['name'],

@@ -21,8 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<dynamic> getAllStudent() {
     final results = StudentService().getAllStudent();
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
@@ -128,9 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  print('to be implemented');
-                },
+                onTap: () {},
                 child: const Card(
                   child: Padding(
                     padding: EdgeInsets.all(14.0),
@@ -142,9 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  print('to be implemented');
-                },
+                onTap: () {},
                 child: const Card(
                   child: Padding(
                     padding: EdgeInsets.all(14.0),

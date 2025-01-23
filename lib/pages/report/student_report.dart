@@ -36,13 +36,10 @@ class _StudentReportState extends State<StudentReport> {
     _jwtPayload = decodeJwtPayload(token);
     final Teacher teacher =
         await TeacherService().getTeacherById(_jwtPayload!['id']);
-    print('teacher');
-    print('teacher.homeroom_class');
-    print(teacher.homeroom_class!.id);
+
     final results =
         await StudentService().getStudentByClassId(teacher.homeroom_class!.id);
-    print('results di grade');
-    print(results);
+
     return results;
   }
 

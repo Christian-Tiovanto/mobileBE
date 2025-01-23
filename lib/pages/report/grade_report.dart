@@ -26,16 +26,14 @@ class _GradeReportState extends State<GradeReport> {
   Future<dynamic> getStudentNItsGrade() async {
     final results = await GradeService()
         .getStudentNItsGrade(widget.student.id, widget.student.class_id.id);
-    print('results di grade');
-    print(results);
+
     return results;
   }
 
   Future<dynamic> getAttendanceCount(String status) async {
     final results = await AttendanceService().getAttendanceCount(
         widget.student.id, widget.student.class_id.id, status);
-    print('results di grade');
-    print(results);
+
     return results;
   }
 

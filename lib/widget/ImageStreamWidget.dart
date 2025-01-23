@@ -12,8 +12,6 @@ class ImageStreamWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('imageUrl di streamwidget');
-    print(imageUrl);
     return StreamBuilder<Uint8List>(
       stream: _imageLoader.loadImage(imageUrl),
       builder: (context, snapshot) {

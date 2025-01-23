@@ -30,8 +30,6 @@ class _ViewFileAssignmentPageState extends State<ViewFileAssignmentPage> {
 
   // Download the file and store it locally
   Future<void> _downloadFile(String assignmentId, String fileName) async {
-    print('assignmentId d i viewfileassigmentPage');
-    print(assignmentId);
     // Fetch the file data from your API using the assignmentId
     final response = await http.get(Uri.parse(
         "http://$baseHost:$basePort/api/v1/assignment/$assignmentId/file"));
@@ -42,13 +40,11 @@ class _ViewFileAssignmentPageState extends State<ViewFileAssignmentPage> {
       // You can attempt to get the mime type from the headers or rely on the response data
       final mimeType =
           lookupMimeType(response.headers['content-type']!, headerBytes: bytes);
-      print('File MIME type: $mimeType');
-      print(response.headers);
+
       // Save the file locally
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/$fileName');
-      print('file.path');
-      print(file.path);
+
       await file.writeAsBytes(bytes, flush: true);
 
       setState(() {

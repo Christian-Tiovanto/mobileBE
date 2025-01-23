@@ -6,15 +6,10 @@ class DrawerSubjTeacher extends StatelessWidget {
   late SharedPreferences _prefs;
 
   Future _removeData() async {
-    print("kepanggil gak sih");
     _prefs = await SharedPreferences.getInstance();
     bool removed = await _prefs.remove('token');
     if (removed) {
-      print(_prefs.getString('token'));
-      print('Data removed successfully!');
-    } else {
-      print('Error removing data.');
-    }
+    } else {}
   }
 
   @override
@@ -74,37 +69,6 @@ class DrawerSubjTeacher extends StatelessWidget {
                 padding: EdgeInsets.all(14.0),
                 child: Text(
                   "Announcements",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pushNamed(context, '/schedule');
-              print('to be implemented');
-            },
-            child: const Card(
-              child: Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text(
-                  "Schedule",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              print('to Be Implemented');
-              // Navigator.pushNamed(context, '/schedule');
-              // print('to be implemented');
-            },
-            child: const Card(
-              child: Padding(
-                padding: EdgeInsets.all(14.0),
-                child: Text(
-                  "Schedule",
                   style: TextStyle(fontSize: 20),
                 ),
               ),

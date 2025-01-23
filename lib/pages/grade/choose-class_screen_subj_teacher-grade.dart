@@ -17,8 +17,7 @@ class _ChooseClassSubjTeacherGradePageState
     extends State<ChooseClassSubjTeacherGradePage> {
   Future<dynamic> getAllTeacherClass() {
     final results = TeacherService().getClass();
-    print('results di get class teacher');
-    print(results);
+
     return results;
   }
 
@@ -39,8 +38,7 @@ class _ChooseClassSubjTeacherGradePageState
                   );
                 } else if (snapshot.hasData) {
                   final data = snapshot.data as Map<String, dynamic>;
-                  print("data['class_id']");
-                  print(data['class_id']);
+
                   return Center(
                     child: Column(
                       children: [

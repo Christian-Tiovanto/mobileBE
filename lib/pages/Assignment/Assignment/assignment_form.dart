@@ -42,8 +42,7 @@ class _AssignmentFormState extends State<AssignmentForm> {
           pickedTime.hour,
           pickedTime.minute,
         );
-        print('finalDateTime');
-        print(finalDateTime);
+
         setState(() {
           _dueDateController.text = '$finalDateTime';
         });
@@ -64,8 +63,6 @@ class _AssignmentFormState extends State<AssignmentForm> {
   void _saveAssignment() async {
     if (_titleController.text.isNotEmpty &&
         _dueDateController.text.isNotEmpty) {
-      print('attachedFiles');
-      print(attachedFiles);
       try {
         final newAssignment = Assignment(
             title: _titleController.text,
@@ -73,17 +70,13 @@ class _AssignmentFormState extends State<AssignmentForm> {
             description: _descriptionController.text,
             attachedFiles: attachedFiles,
             class_id: widget.classId);
-        print('attachedFiles');
-        print(attachedFiles);
+
         final response = await AssignmentService().createAssignment(
             newAssignment, attachedFiles == '' ? null : attachedFiles);
         if (response == true) {
           Navigator.pop(context, newAssignment);
         }
-      } catch (error) {
-        print('error di saveassignment');
-        print(error);
-      }
+      } catch (error) {}
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill out all fields')),
